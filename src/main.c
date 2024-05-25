@@ -5,6 +5,7 @@
 #include "timing.h"
 #include "normal.h"
 #include "uniform.h"
+#include "stats.h"
 
 #define NUM_VALS 1000000
 
@@ -17,14 +18,20 @@ void test_alg(void* args) {
 
 int get_method_summary(AlgID id, int N) {
     double t;
+    double mean, stdev;
     double* vals = malloc(N * sizeof(double));
     if (vals == NULL) return -1;
 
     AlgArgs A = {.id=id, .arr=vals, .N=N};
     t = time_function(&test_alg, &A);
+    
+    mean = get_mean(A.arr, N);
+    stdev = get_stdev(A.arr, N);
 
     printf("-------- Method \"%s\" --------\n",alg_names[id]);
     printf("Sampling %d numbers\n", N);
+    printf("Mean: %f\n", mean);
+    printf("Standard deviation: %f\n", stdev);
     printf("Time (ms): %f\n\n", t);
 
     free(vals);
