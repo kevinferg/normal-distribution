@@ -3,7 +3,7 @@
 
 typedef enum AlgID {
     IRWIN_HALL, 
-    INTEGRAL_TRANSFORM, 
+    PROB_INT, 
     BOX_MULLER, 
     MARSAGLIA, 
     ALGMAX
@@ -24,7 +24,7 @@ extern const NormalAlgFunction alg_functions[ALGMAX];
 
 int normal_irwin_hall(double* arr, int N);
 
-int normal_integral_transform(double* arr, int N);
+int normal_prob_int(double* arr, int N);
 
 int normal_box_muller(double* arr, int N);
 

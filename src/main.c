@@ -28,11 +28,13 @@ int get_method_summary(AlgID id, int N) {
     mean = get_mean(A.arr, N);
     stdev = get_stdev(A.arr, N);
 
-    printf("-------- Method \"%s\" --------\n",alg_names[id]);
+    printf("-----------------------------------------\n");
+    printf("> Method \"%s\"\n",alg_names[id]);
     printf("Sampling %d numbers\n", N);
     printf("Mean: %f\n", mean);
     printf("Standard deviation: %f\n", stdev);
-    printf("Time (ms): %f\n\n", t);
+    printf("Time (ms): %f\n", t);
+    printf("-----------------------------------------\n\n");
 
     free(vals);
     return 0;

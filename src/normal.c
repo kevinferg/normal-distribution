@@ -8,14 +8,14 @@
 
 const char* alg_names[ALGMAX] = {
     [IRWIN_HALL] = "Irwin-Hall",
-    [INTEGRAL_TRANSFORM] = "Probability Integral Transform",
+    [PROB_INT] = "Probability Integral Transform",
     [BOX_MULLER] = "Box-Muller",
     [MARSAGLIA] = "Marsaglia Polar",
 };
 
 const NormalAlgFunction alg_functions[ALGMAX] = {
     [IRWIN_HALL] = normal_irwin_hall,
-    [INTEGRAL_TRANSFORM] = normal_integral_transform,
+    [PROB_INT] = normal_prob_int,
     [BOX_MULLER] = normal_box_muller,
     [MARSAGLIA] = normal_marsaglia,
 };
@@ -34,12 +34,22 @@ int normal_irwin_hall(double* arr, int N) {
         for (j = 0; j < IH_TOTAL; j++) {
             arr[i] += rand_unif_open();
         }
-        arr[i] -= 6.0;
+        arr[i] -= IH_HALF;
     }
     return 0;
 }
 
-int normal_integral_transform(double* arr, int N) {
+
+double probit(double y) {
+    // TODO: Seek a better approximation
+    return log(y/(1-y)) * sqrt(PI/8.0);
+}
+
+int normal_prob_int(double* arr, int N) {
+    int i;
+    for (i = 0; i < N; i++) {
+        arr[i] = probit(rand_unif_open());
+    }
     return 0;
 }
 
@@ -56,6 +66,7 @@ int normal_box_muller(double* arr, int N) {
     }
     return 0;
 }
+
 
 int normal_marsaglia(double* arr, int N) {
     int i;
