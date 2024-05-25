@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "normal.h"
+#include "uniform.h"
+
+#define PI 3.14159265358979323846
+
+const char* alg_names[ALGMAX] = {
+    [IRWIN_HALL] = "Irwin-Hall",
+    [INTEGRAL_TRANSFORM] = "Probability Integral Transform",
+    [BOX_MULLER] = "Box-Muller",
+    [MARSAGLIA] = "Marsaglia Polar",
+};
+
+const NormalAlgFunction alg_functions[ALGMAX] = {
+    [IRWIN_HALL] = normal_irwin_hall,
+    [INTEGRAL_TRANSFORM] = normal_integral_transform,
+    [BOX_MULLER] = normal_box_muller,
+    [MARSAGLIA] = normal_marsaglia,
+};
+
+
+
+/************ Algorithms ************/
+
+#define IH_TOTAL (12)
+#define IH_HALF (IH_TOTAL/2)
+
+int normal_irwin_hall(double* arr, int N) {
+    int i, j;
+    for (i = 0; i < N; i++) {
+        arr[i] = 0.0;
+        for (j = 0; j < IH_TOTAL; j++) {
+            arr[i] += rand_unif_open();
+        }
+        arr[i] -= 6.0;
+    }
+    return 0;
+}
+
+int normal_integral_transform(double* arr, int N) {
+    return 0;
+}
+
+int normal_box_muller(double* arr, int N) {
+    int i;
+    double U, V, X, Y;
+    for (i = 0; i < N; i += 2) {
+        U = rand_unif_open();
+        V = rand_unif_open();
+        arr[i]   = sqrt(-2.*log(U)) * cos(2*PI * V);
+        arr[i+1] = sqrt(-2.*log(U)) * sin(2*PI * V);
+    }
+    return 0;
+}
+
+int normal_marsaglia(double* arr, int N) {
+    return 0;
+}
