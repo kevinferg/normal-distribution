@@ -66,7 +66,7 @@ int normal_marsaglia(double* arr, int N) {
             U = rand_unif_open()*2.0 - 1;
             V = rand_unif_open()*2.0 - 1;
             S = U*U + V*V;
-        } while (S < 1.0);
+        } while (S >= 1.0);
         C = sqrt(-2.*log(S)/S);
         arr[i]   = C*U;
         arr[i+1] = C*V;
