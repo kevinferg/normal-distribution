@@ -56,12 +56,12 @@ int normal_prob_int(double* arr, int N) {
 int normal_box_muller(double* arr, int N) {
     int i;
     double U, V, C;
-    if (N < 2) return -1;
     for (i = 0; i < N; i += 2) {
         U = rand_unif_open();
         V = rand_unif_open();
         C = sqrt(-2.*log(U));
         arr[i]   = C * cos(2*PI * V);
+        if (i == N-1) return 0;
         arr[i+1] = C * sin(2*PI * V);
     }
     return 0;
@@ -71,7 +71,6 @@ int normal_box_muller(double* arr, int N) {
 int normal_marsaglia(double* arr, int N) {
     int i;
     double U, V, S, C;
-    if (N < 2) return -1;
     for (i = 0; i < N; i += 2) {
         do {
             U = rand_unif_open()*2.0 - 1;
@@ -80,6 +79,7 @@ int normal_marsaglia(double* arr, int N) {
         } while (S >= 1.0);
         C = sqrt(-2.*log(S)/S);
         arr[i]   = C*U;
+        if (i == N-1) return 0;
         arr[i+1] = C*V;
     }
     return 0;
