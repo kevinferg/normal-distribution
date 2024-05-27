@@ -13,11 +13,12 @@ Descriptions of these can be found on [Wikipedia](https://en.wikipedia.org/wiki/
 
 Todo:
 - [ ] Implement more methods
-      - [x] Irwin-Hall with integers
+  - [x] Irwin-Hall with integers
 - [ ] More rigorous statistical testing of results
 - [ ] Use a random number generator better than rand()
-- [x] Implement PPND7 for improved probit approximation
-- [ ] Further mprove probit() approximation to use PPND16
+- [ ] Probit function improvements
+  - [x] Implement PPND7 for improved probit approximation
+  - [ ] Implement PPND16 for even better approximation
 
 ## Results
 
