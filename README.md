@@ -1,7 +1,7 @@
 # Sampling from a standard normal distribution
 
 ## Description
-Comparing several algorithms for sampling from a normal distribution.  
+Comparing several algorithms for sampling from a normal distribution. Includes an implementation of PPND7 to compute the probit function.
 
 The currently implemented methods are:
 - Irwin-Hall
@@ -15,42 +15,43 @@ Todo:
 - [ ] Implement more methods
 - [ ] More rigorous statistical testing of results
 - [ ] Use a random number generator better than rand()
-- [ ] Improve probit() approximation in PIT method
+- [x] Implement PPND7 for improved probit approximation
+- [ ] Further mprove probit() approximation to use PPND16
 
 ## Results
 
 ```
------------------------------------------
-> Method "Irwin-Hall"
-Sampling 1000000 numbers
-Mean: -0.000283
-Standard deviation: 0.999789
-Time (ms): 0.973000
------------------------------------------
+------------------------------------------------
+> "Irwin-Hall" Method
+> Sampling 1000000 numbers from N(0,1)
+Mean:  -0.000283
+Stdev:  0.999789
+Time (ms): 891
+------------------------------------------------
 
------------------------------------------
-> Method "Probability Integral Transform"
-Sampling 1000000 numbers
-Mean: 0.000270
-Standard deviation: 1.137532
-Time (ms): 0.341000
------------------------------------------
+------------------------------------------------
+> "Probability Integral Transform" Method
+> Sampling 1000000 numbers from N(0,1)
+Mean:   0.000138
+Stdev:  1.000880
+Time (ms): 331
+------------------------------------------------
 
------------------------------------------
-> Method "Box-Muller"
-Sampling 1000000 numbers
-Mean: 0.000483
-Standard deviation: 0.998407
-Time (ms): 0.498000
------------------------------------------
+------------------------------------------------
+> "Box-Muller" Method
+> Sampling 1000000 numbers from N(0,1)
+Mean:   0.000483
+Stdev:  0.998407
+Time (ms): 488
+------------------------------------------------
 
------------------------------------------
-> Method "Marsaglia Polar"
-Sampling 1000000 numbers
-Mean: -0.000676
-Standard deviation: 1.000444
-Time (ms): 0.320000
------------------------------------------
+------------------------------------------------
+> "Marsaglia Polar" Method
+> Sampling 1000000 numbers from N(0,1)
+Mean:  -0.000676
+Stdev:  1.000444
+Time (ms): 328
+------------------------------------------------
 ```
 
 ## Compiling

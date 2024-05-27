@@ -56,19 +56,3 @@ In some rare cases, the make tool will not track changes correctly and compilati
 ```
 
 ---
-
-# Copy of main readme
-
-## C-small-project-template
-Template for a small project in C
-
-## Editing
-- Put main code in the file `src/main.c`
-- Place other source files into `src/`, and their corresponding headers in `inc/`
-
-## Compiling
-On Windows with MinGW installed, compile by running the following from the main directory:
-```
-mingw32-make
-```
-After compiling, the executable will be located in `bin/`
