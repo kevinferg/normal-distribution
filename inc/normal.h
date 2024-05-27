@@ -6,6 +6,7 @@ typedef enum AlgID {
     PROB_INT, 
     BOX_MULLER, 
     MARSAGLIA, 
+    IRWIN_HALL_INT,
     ALGMAX
 } AlgID;
 
@@ -30,6 +31,6 @@ int normal_box_muller(double* arr, int N);
 
 int normal_marsaglia(double* arr, int N);
 
-
+int normal_irwin_hall_int(double* arr, int N);
 
 #endif

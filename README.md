@@ -13,6 +13,7 @@ Descriptions of these can be found on [Wikipedia](https://en.wikipedia.org/wiki/
 
 Todo:
 - [ ] Implement more methods
+      - [x] Irwin-Hall with integers
 - [ ] More rigorous statistical testing of results
 - [ ] Use a random number generator better than rand()
 - [x] Implement PPND7 for improved probit approximation
@@ -23,34 +24,42 @@ Todo:
 ```
 ------------------------------------------------
 > "Irwin-Hall" Method
-> Sampling 1000000 numbers from N(0,1)
-Mean:  -0.000283
-Stdev:  0.999789
-Time (ms): 891
+> Sampling 10000000 numbers from N(0,1)
+Mean:   0.000643
+Stdev:  1.000260
+Time (ms): 9326
 ------------------------------------------------
 
 ------------------------------------------------
 > "Probability Integral Transform" Method
-> Sampling 1000000 numbers from N(0,1)
-Mean:   0.000138
-Stdev:  1.000880
-Time (ms): 331
+> Sampling 10000000 numbers from N(0,1)
+Mean:  -0.000382
+Stdev:  0.999696
+Time (ms): 3320
 ------------------------------------------------
 
 ------------------------------------------------
 > "Box-Muller" Method
-> Sampling 1000000 numbers from N(0,1)
-Mean:   0.000483
-Stdev:  0.998407
-Time (ms): 488
+> Sampling 10000000 numbers from N(0,1)
+Mean:   0.000096
+Stdev:  1.000082
+Time (ms): 4975
 ------------------------------------------------
 
 ------------------------------------------------
 > "Marsaglia Polar" Method
-> Sampling 1000000 numbers from N(0,1)
-Mean:  -0.000676
-Stdev:  1.000444
-Time (ms): 328
+> Sampling 10000000 numbers from N(0,1)
+Mean:   0.000009
+Stdev:  1.000022
+Time (ms): 3057
+------------------------------------------------
+
+------------------------------------------------
+> "Irwin-Hall with Integers" Method
+> Sampling 10000000 numbers from N(0,1)
+Mean:  -0.000202
+Stdev:  1.000174
+Time (ms): 6995
 ------------------------------------------------
 ```
 

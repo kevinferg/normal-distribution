@@ -8,7 +8,7 @@
 #include "stats.h"
 #include "probit.h"
 
-#define NUM_VALS 1000000
+#define NUM_VALS 10000000
 
 void test_alg(void* args) {
     AlgArgs* A = (AlgArgs*) args;
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
         get_method_summary(i, NUM_VALS);
     }
 
-    test_probit();
+    // test_probit();
 
     return 0;
 }
