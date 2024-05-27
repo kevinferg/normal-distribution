@@ -6,6 +6,7 @@
 #include "normal.h"
 #include "uniform.h"
 #include "stats.h"
+#include "probit.h"
 
 #define NUM_VALS 1000000
 
@@ -41,11 +42,14 @@ int get_method_summary(AlgID id, int N) {
 }
 
 int main(int argc, char** argv) {
+
     AlgID i;
 
     for (i = 0; i < ALGMAX; i++) {
         get_method_summary(i, NUM_VALS);
     }
+
+    test_probit();
 
     return 0;
 }

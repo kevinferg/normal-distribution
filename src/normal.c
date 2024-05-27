@@ -3,6 +3,7 @@
 #include <math.h>
 #include "normal.h"
 #include "uniform.h"
+#include "probit.h"
 
 #define PI 3.14159265358979323846
 
@@ -40,7 +41,7 @@ int normal_irwin_hall(double* arr, int N) {
 }
 
 
-double probit(double y) {
+double probit_approx(double y) {
     // TODO: Seek a better approximation
     return log(y/(1-y)) * sqrt(PI/8.0);
 }
@@ -48,7 +49,7 @@ double probit(double y) {
 int normal_prob_int(double* arr, int N) {
     int i;
     for (i = 0; i < N; i++) {
-        arr[i] = probit(rand_unif_open());
+        arr[i] = probit7(rand_unif_open());
     }
     return 0;
 }
