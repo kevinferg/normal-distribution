@@ -181,7 +181,7 @@ int hash_check(const double* A, const double* B, double hash, int N, char* name)
     return !compare;
 }
 
-int check_probit_vals(p) {
+int check_probit_vals(void) {
     int i;
     double ps[3] = {0.25, 0.001, 1e-20};
     double vals[3] = { -0.6744897501960817, -3.090232306167814, -9.262340089798408};
