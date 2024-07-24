@@ -64,12 +64,17 @@ Time (ms): 6995
 ------------------------------------------------
 ```
 
-## Compiling
-On Windows with MinGW installed, compile by running the following from the main directory:
+## Compilation and Usage
+- Windows:
 ```
 mingw32-make
+./bin/main.exe
 ```
-After compiling, the executable will be located in `bin/`
 
----
-See the [`doc/README.md`](doc/README.md) for more details, such as how to compile on other systems.
+- Linux:
+```
+make
+./bin/main.exe
+```
+
+See [`doc/README.md`](doc/README.md) for more details.
