@@ -4,6 +4,7 @@
 #include "normal.h"
 #include "uniform.h"
 #include "probit.h"
+#include "fasttrig.h"
 
 #define PI 3.14159265358979323846
 
@@ -13,6 +14,7 @@ const char* alg_names[ALGMAX] = {
     [BOX_MULLER] = "Box-Muller",
     [MARSAGLIA] = "Marsaglia Polar",
     [IRWIN_HALL_INT] = "Irwin-Hall with Integers",
+    [BHASKARA_MULLER] = "Box-Muller with Fast Trig",
 };
 
 const NormalAlgFunction alg_functions[ALGMAX] = {
@@ -21,6 +23,7 @@ const NormalAlgFunction alg_functions[ALGMAX] = {
     [BOX_MULLER] = normal_box_muller,
     [MARSAGLIA] = normal_marsaglia,
     [IRWIN_HALL_INT] = normal_irwin_hall_int,
+    [BHASKARA_MULLER] = normal_bhaskara_muller,
 };
 
 
@@ -97,6 +100,20 @@ int normal_irwin_hall_int(double* arr, int N) {
             sum += rand();
         }
         arr[i] = ((double) (sum)) /((double) (RAND_MAX + 2)) - ((double) IH_HALF);
+    }
+    return 0;
+}
+
+int normal_bhaskara_muller(double* arr, int N) {
+    int i;
+    double U, V, C;
+    for (i = 0; i < N; i += 2) {
+        U = rand_unif_open();
+        V = rand_unif_open();
+        C = sqrt(-2.*log(U));
+        arr[i]   = C * fastcos(2*PI * V);
+        if (i == N-1) return 0;
+        arr[i+1] = C * fastsin(2*PI * V);
     }
     return 0;
 }

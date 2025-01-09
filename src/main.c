@@ -7,6 +7,7 @@
 #include "uniform.h"
 #include "stats.h"
 #include "probit.h"
+#include "fasttrig.h"
 
 #define NUM_VALS 10000000
 
@@ -50,6 +51,7 @@ int main(int argc, char** argv) {
     }
 
     // test_probit();
+    // test_fasttrig();
 
     return 0;
 }

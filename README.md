@@ -14,6 +14,7 @@ Descriptions of these can be found on [Wikipedia](https://en.wikipedia.org/wiki/
 Todo:
 - [ ] Implement more methods
   - [x] Irwin-Hall with integers
+  - [x] Box-Muller with Bhaskara I's sine approximation
 - [ ] More rigorous statistical testing of results
 - [ ] Use a random number generator better than rand()
 - [ ] Probit function improvements
@@ -28,7 +29,7 @@ Todo:
 > Sampling 10000000 numbers from N(0,1)
 Mean:   0.000643
 Stdev:  1.000260
-Time (ms): 9326
+Time (ms): 1160
 ------------------------------------------------
 
 ------------------------------------------------
@@ -36,7 +37,7 @@ Time (ms): 9326
 > Sampling 10000000 numbers from N(0,1)
 Mean:  -0.000382
 Stdev:  0.999696
-Time (ms): 3320
+Time (ms): 567
 ------------------------------------------------
 
 ------------------------------------------------
@@ -44,7 +45,7 @@ Time (ms): 3320
 > Sampling 10000000 numbers from N(0,1)
 Mean:   0.000096
 Stdev:  1.000082
-Time (ms): 4975
+Time (ms): 733
 ------------------------------------------------
 
 ------------------------------------------------
@@ -52,7 +53,7 @@ Time (ms): 4975
 > Sampling 10000000 numbers from N(0,1)
 Mean:   0.000009
 Stdev:  1.000022
-Time (ms): 3057
+Time (ms): 457
 ------------------------------------------------
 
 ------------------------------------------------
@@ -60,7 +61,15 @@ Time (ms): 3057
 > Sampling 10000000 numbers from N(0,1)
 Mean:  -0.000202
 Stdev:  1.000174
-Time (ms): 6995
+Time (ms): 960
+------------------------------------------------
+
+------------------------------------------------
+> "Box-Muller with Fast Trig" Method
+> Sampling 10000000 numbers from N(0,1)
+Mean:   0.000255
+Stdev:  0.999460
+Time (ms): 601
 ------------------------------------------------
 ```
 
