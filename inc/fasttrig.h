@@ -11,8 +11,8 @@
 
 #define FASTPI 3.14159265358979323846
 
-double fastsin(double x);
-double fastcos(double x);
+float fastsin(float x);
+float fastcos(float x);
 
 int test_fasttrig(void);
 

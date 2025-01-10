@@ -10,25 +10,35 @@
  * 
  **********************************************/
 
-double fastsin(double x) {
-    double A, numer, denom;
-    int sign = 1;
-
-    while (x < 0.)    x += 2.*FASTPI;
-    while (x > 2.*FASTPI) x -= 2.*FASTPI;
-
-    if (x > FASTPI) { // Flip sign if x > pi
-        x -= FASTPI;
-        sign = -1;
-    }
-
+static inline float bhaskara(float x) {
+    float A, numer, denom;
     A = x * (FASTPI - x);
     numer = 16. * A;
     denom = 5*FASTPI*FASTPI - 4.*A;
-    return sign * numer / denom;
+    return numer / denom;
 }
 
-double fastcos(double x) {
+float fastsin(float x) {
+    int sign = 1;
+
+    if (x < 0.) {
+        sign *= -1;
+        x = -x;
+    } // Use symmetry to flip across x=0
+
+    if (x >= 2.0*FASTPI) {
+        x = fmodf(x, 2.0*FASTPI);
+    } // fmod to get within [0, 2*pi)
+
+    if (x > FASTPI) {
+        sign *= -1;
+        x -= FASTPI;
+    } // Use symmetry to flip across x=pi
+
+    return sign*bhaskara(x);
+}
+
+float fastcos(float x) {
     return fastsin(FASTPI*0.5 - x);
 }
 
