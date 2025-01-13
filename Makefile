@@ -22,8 +22,10 @@ ifeq ($(UNAME_S),Linux)
     MKDIR = mkdir -p
     EXE = 
     SLASH = /
+    TOUCH = touch
 else
     RM = cmd.exe /C del /Q
+    TOUCH = cmd.exe /C echo.>
     MKDIR = mkdir
     EXE = .exe
     SLASH = \\
@@ -58,7 +60,10 @@ silent:
 
 clean:
 ifeq ($(UNAME_S),Linux)
-	$(RM) $(OBJDIR)/* $(BINDIR)/*
+	$(RM) -f $(OBJDIR)/* $(BINDIR)/*
+	$(TOUCH) $(OBJDIR)/.gitkeep $(BINDIR)/.gitkeep
 else
-	$(RM) $(OBJDIR)$(SLASH)* $(BINDIR)$(SLASH)*
+	$(RM) "$(OBJDIR)$(SLASH)*" "$(BINDIR)$(SLASH)*"
+	$(TOUCH) "$(OBJDIR)$(SLASH).gitkeep"
+	$(TOUCH) "$(BINDIR)$(SLASH).gitkeep"
 endif

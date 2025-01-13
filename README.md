@@ -83,7 +83,7 @@ mingw32-make
 - Linux:
 ```
 make
-./bin/main.exe
+./bin/main
 ```
 
 See [`doc/README.md`](doc/README.md) for more details.
