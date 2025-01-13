@@ -7,4 +7,8 @@ double get_stdev(double* arr, int N);
 
 double get_variance(double* arr, int N);
 
+double get_skewness(double* arr, int N);
+
+double get_kurtosis(double* arr, int N);
+
 #endif

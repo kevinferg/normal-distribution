@@ -20,7 +20,7 @@ void test_alg(void* args) {
 
 int get_method_summary(AlgID id, int N) {
     double t;
-    double mean, stdev;
+    double mean, stdev, skew, kurt;
     double* vals = malloc(N * sizeof(double));
     if (vals == NULL) return -1;
 
@@ -29,12 +29,17 @@ int get_method_summary(AlgID id, int N) {
     
     mean = get_mean(A.arr, N);
     stdev = get_stdev(A.arr, N);
+    skew = get_skewness(A.arr, N);
+    kurt = get_kurtosis(A.arr, N);
 
     printf("------------------------------------------------\n");
     printf("> \"%s\" Method\n",alg_names[id]);
     printf("> Sampling %d numbers from N(0,1)\n", N);
-    printf("Mean:  % 0.6f\n", mean);
-    printf("Stdev: % 0.6f\n", stdev);
+    printf("    Mean:  % 0.6f    "
+           "   Stdev:  % 0.6f\n", mean, stdev);
+    printf("Skewness:  % 0.6f    "
+           "Kurtosis:  % 0.6f\n", skew, kurt);
+
     printf("Time (ms): %3.f\n", t*1000);
     printf("------------------------------------------------\n\n");
 
