@@ -9,6 +9,7 @@
 #define PI 3.14159265358979323846
 
 const char* alg_names[ALGMAX] = {
+    [ACCEPT_REJECT] = "Rejection Sampling",
     [IRWIN_HALL] = "Irwin-Hall",
     [PROB_INT] = "Probability Integral Transform",
     [BOX_MULLER] = "Box-Muller",
@@ -18,6 +19,7 @@ const char* alg_names[ALGMAX] = {
 };
 
 const NormalAlgFunction alg_functions[ALGMAX] = {
+    [ACCEPT_REJECT] = normal_accept_reject,
     [IRWIN_HALL] = normal_irwin_hall,
     [PROB_INT] = normal_prob_int,
     [BOX_MULLER] = normal_box_muller,
@@ -29,6 +31,24 @@ const NormalAlgFunction alg_functions[ALGMAX] = {
 
 
 /************ Algorithms ************/
+
+#define INV_SQRT_2PI 0.3989422804
+#define REJECT_BOUND 3.33333
+
+int normal_accept_reject(double* arr, int N) {
+    int i;
+    double xrand, prand, pthres;
+    for (i = 0; i < N; i++) {
+        do {
+            xrand = REJECT_BOUND - 2.0*REJECT_BOUND * rand_unif_closed();
+            prand = rand_unif_closed();
+            pthres = exp(-0.5*(xrand*xrand));
+        } while (prand >= pthres);
+        arr[i] = xrand;
+    }
+    return 0;
+}
+
 
 #define IH_TOTAL (12)
 #define IH_HALF (IH_TOTAL/2)

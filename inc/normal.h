@@ -2,6 +2,7 @@
 #define NORMAL_H
 
 typedef enum AlgID {
+    ACCEPT_REJECT,
     IRWIN_HALL, 
     PROB_INT, 
     BOX_MULLER, 
@@ -23,6 +24,8 @@ extern const char* alg_names[ALGMAX];
 extern const NormalAlgFunction alg_functions[ALGMAX];
 
 /************ Algorithms ************/
+
+int normal_accept_reject(double* arr, int N);
 
 int normal_irwin_hall(double* arr, int N);
 

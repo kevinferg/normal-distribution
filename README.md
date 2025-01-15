@@ -4,6 +4,7 @@
 Comparing several algorithms for sampling from a normal distribution. Includes an implementation of PPND7 to compute the probit function.
 
 The currently implemented methods are:
+- Rejection Sampling
 - Irwin-Hall
 - Probability Integral Transform
 - Box-Muller
@@ -12,9 +13,10 @@ The currently implemented methods are:
 Descriptions of these can be found on [Wikipedia](https://en.wikipedia.org/wiki/Normal_distribution#Generating_values_from_normal_distribution).
 
 Todo:
-- [ ] Implement more methods
+- [x] Implement more methods
   - [x] Irwin-Hall with integers
   - [x] Box-Muller with Bhaskara I's sine approximation
+  - [x] Rejection sampling
 - [x] More rigorous statistical testing of results
 - [ ] Use a random number generator better than rand()
 - [ ] Probit function improvements
@@ -24,6 +26,14 @@ Todo:
 ## Results
 
 ```
+------------------------------------------------
+> "Rejection Sampling" Method
+> Sampling 10000000 numbers from N(0,1)
+    Mean:  -0.000533       Stdev:   0.994992
+Skewness:  -0.000673    Kurtosis:   2.914969
+Time (ms): 1650
+------------------------------------------------
+
 ------------------------------------------------
 > "Irwin-Hall" Method
 > Sampling 10000000 numbers from N(0,1)
