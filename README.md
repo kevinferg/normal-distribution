@@ -31,55 +31,55 @@ Todo:
 > Sampling 10000000 numbers from N(0,1)
     Mean:  -0.000533       Stdev:   0.994992
 Skewness:  -0.000673    Kurtosis:   2.914969
-Time (ms): 1650
+Time (ms): 1601
 ------------------------------------------------
 
 ------------------------------------------------
 > "Irwin-Hall" Method
 > Sampling 10000000 numbers from N(0,1)
-    Mean:   0.000643       Stdev:   1.000260
-Skewness:   0.000101    Kurtosis:   2.900275
-Time (ms): 1211
+    Mean:   0.000376       Stdev:   1.000109
+Skewness:   0.000048    Kurtosis:   2.899250
+Time (ms): 1195
 ------------------------------------------------
 
 ------------------------------------------------
 > "Probability Integral Transform" Method
 > Sampling 10000000 numbers from N(0,1)
-    Mean:  -0.000382       Stdev:   0.999696
-Skewness:  -0.001391    Kurtosis:   2.989751
-Time (ms): 565
+    Mean:   0.000096       Stdev:   0.999577
+Skewness:  -0.001203    Kurtosis:   2.988304
+Time (ms): 295
 ------------------------------------------------
 
 ------------------------------------------------
 > "Box-Muller" Method
 > Sampling 10000000 numbers from N(0,1)
-    Mean:   0.000096       Stdev:   1.000082
-Skewness:   0.000935    Kurtosis:   2.997576
-Time (ms): 707
+    Mean:  -0.001156       Stdev:   1.000016
+Skewness:   0.000478    Kurtosis:   2.996292
+Time (ms): 748
 ------------------------------------------------
 
 ------------------------------------------------
 > "Marsaglia Polar" Method
 > Sampling 10000000 numbers from N(0,1)
-    Mean:   0.000009       Stdev:   1.000022
-Skewness:   0.000136    Kurtosis:   2.998573
-Time (ms): 456
+    Mean:   0.000257       Stdev:   1.000170
+Skewness:   0.000639    Kurtosis:   2.999720
+Time (ms): 424
 ------------------------------------------------
 
 ------------------------------------------------
 > "Irwin-Hall with Integers" Method
 > Sampling 10000000 numbers from N(0,1)
-    Mean:  -0.000202       Stdev:   1.000174
-Skewness:   0.000569    Kurtosis:   2.898452
-Time (ms): 1001
+    Mean:  -0.000649       Stdev:   1.000055
+Skewness:   0.000587    Kurtosis:   2.896108
+Time (ms): 1013
 ------------------------------------------------
 
 ------------------------------------------------
 > "Box-Muller with Fast Trig" Method
 > Sampling 10000000 numbers from N(0,1)
-    Mean:   0.000255       Stdev:   0.999460
-Skewness:  -0.001030    Kurtosis:   2.995563
-Time (ms): 474
+    Mean:  -0.000338       Stdev:   0.999357
+Skewness:   0.000975    Kurtosis:   2.995304
+Time (ms): 481
 ------------------------------------------------
 ```
 

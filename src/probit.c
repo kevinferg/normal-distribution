@@ -11,13 +11,13 @@
 
 #define AB_PREC7_N 4
 #define AB_PREC7_HASH 32.3184577772
-const double A_PREC7[AB_PREC7_N] = {
+const float A_PREC7[AB_PREC7_N] = {
     [0] = 3.3871327179e0,
     [1] = 5.0434271938e1,
     [2] = 1.5929113202e2,
     [3] = 5.9109374720e1,
 };
-const double B_PREC7[AB_PREC7_N] = {
+const float B_PREC7[AB_PREC7_N] = {
     [0] = 1.0,
     [1] = 1.7895169469e1,
     [2] = 7.8757757664e1,
@@ -26,13 +26,13 @@ const double B_PREC7[AB_PREC7_N] = {
 
 #define CD_PREC7_N 4
 #define CD_PREC7_HASH 15.7614929821
-const double C_PREC7[CD_PREC7_N] = {
+const float C_PREC7[CD_PREC7_N] = {
     [0] = 1.4234372777e0,
     [1] = 2.7568153900e0,
     [2] = 1.3067284816e0,
     [3] = 1.7023821103e-1,
 };
-const double D_PREC7[AB_PREC7_N] = {
+const float D_PREC7[AB_PREC7_N] = {
     [0] = 1.0,
     [1] = 7.3700164250e-1,
     [2] = 1.2021132975e-1,
@@ -41,13 +41,13 @@ const double D_PREC7[AB_PREC7_N] = {
 
 #define EF_PREC7_N 4 
 #define EF_PREC7_HASH 19.4052910204
-const double E_PREC7[EF_PREC7_N] = {
+const float E_PREC7[EF_PREC7_N] = {
     [0] = 6.6579051150e0,
     [1] = 3.0812263860e0,
     [2] = 4.2868294337e-1,
     [3] = 1.7337203997e-2,
 };
-const double F_PREC7[EF_PREC7_N] = {
+const float F_PREC7[EF_PREC7_N] = {
     [0] = 1.0,
     [1] = 2.4197894225e-1,
     [2] = 1.2258202635e-2,
@@ -55,101 +55,150 @@ const double F_PREC7[EF_PREC7_N] = {
 };
 
 /**************** Algorithms *****************/
-double R1(double x, int precision) {
+float R1f(float x) {
     int i;
-    double A = 0.0, B = 0.0;
-    double xp = 1.0;
-
-    switch (precision) {
-    case 7:
-        for (i = 0; i < AB_PREC7_N; i++) {
-            A += A_PREC7[i]*xp;
-            B += B_PREC7[i]*xp;
-            if (i == AB_PREC7_N-1) return A/B;
-            xp *= x;
-        }
-    case 16: default:
-        for (i = 0; i < AB_PREC7_N; i++) {
-            A += A_PREC7[i]*xp;
-            B += B_PREC7[i]*xp;
-            if (i == AB_PREC7_N-1) return A/B;
-            xp *= x;
-        }
-
-
+    float A = 0.0, B = 0.0;
+    float xp = 1.0;
+    for (i = 0; i < AB_PREC7_N; i++) {
+        A += A_PREC7[i]*xp;
+        B += B_PREC7[i]*xp;
+        if (i == AB_PREC7_N-1) return A/B;
+        xp *= x;
     }
 }
 
-double R2(double x, int precision) {
+float R2f(float x) {
     int i;
-    double C = 0.0, D = 0.0;
-    double xp = 1.0;
-
-    switch (precision) {
-    case 7:
-        for (i = 0; i < CD_PREC7_N; i++) {
-            C += C_PREC7[i]*xp;
-            D += D_PREC7[i]*xp;
-            if (i == CD_PREC7_N-1) return C/D;
-            xp *= x;
-        }
-    case 16: default:
-        for (i = 0; i < CD_PREC7_N; i++) {
-            C += C_PREC7[i]*xp;
-            D += D_PREC7[i]*xp;
-            if (i == CD_PREC7_N-1) return C/D;
-            xp *= x;
-        }
-
-
+    float C = 0.0, D = 0.0;
+    float xp = 1.0;
+    for (i = 0; i < CD_PREC7_N; i++) {
+        C += C_PREC7[i]*xp;
+        D += D_PREC7[i]*xp;
+        if (i == CD_PREC7_N-1) return C/D;
+        xp *= x;
     }
 }
 
-double R3(double x, int precision) {
+float R3f(float x) {
     int i;
-    double E = 0.0, F = 0.0;
-    double xp = 1.0;
+    float E = 0.0, F = 0.0;
+    float xp = 1.0;
 
-    switch (precision) {
-    case 7:
-        for (i = 0; i < EF_PREC7_N; i++) {
-            E += E_PREC7[i]*xp;
-            F += F_PREC7[i]*xp;
-            if (i == EF_PREC7_N-1) return E/F;
-            xp *= x;
-        }
-    case 16: default:
-        for (i = 0; i < EF_PREC7_N; i++) {
-            E += E_PREC7[i]*xp;
-            F += F_PREC7[i]*xp;
-            if (i == EF_PREC7_N-1) return E/F;
-            xp *= x;
-        }
-
-
+    for (i = 0; i < EF_PREC7_N; i++) {
+        E += E_PREC7[i]*xp;
+        F += F_PREC7[i]*xp;
+        if (i == EF_PREC7_N-1) return E/F;
+        xp *= x;
     }
 }
 
-double probit(double p, int precision) {
-    double r, q = p - 0.5;
+// double R1(double x, int precision) {
+//     int i;
+//     double A = 0.0, B = 0.0;
+//     double xp = 1.0;
+
+//     switch (precision) {
+//     case 7:
+//         for (i = 0; i < AB_PREC7_N; i++) {
+//             A += A_PREC7[i]*xp;
+//             B += B_PREC7[i]*xp;
+//             if (i == AB_PREC7_N-1) return A/B;
+//             xp *= x;
+//         }
+//     case 16: default:
+//         for (i = 0; i < AB_PREC7_N; i++) {
+//             A += A_PREC7[i]*xp;
+//             B += B_PREC7[i]*xp;
+//             if (i == AB_PREC7_N-1) return A/B;
+//             xp *= x;
+//         }
+
+
+//     }
+// }
+
+// double R2(double x, int precision) {
+//     int i;
+//     double C = 0.0, D = 0.0;
+//     double xp = 1.0;
+
+//     switch (precision) {
+//     case 7:
+//         for (i = 0; i < CD_PREC7_N; i++) {
+//             C += C_PREC7[i]*xp;
+//             D += D_PREC7[i]*xp;
+//             if (i == CD_PREC7_N-1) return C/D;
+//             xp *= x;
+//         }
+//     case 16: default:
+//         for (i = 0; i < CD_PREC7_N; i++) {
+//             C += C_PREC7[i]*xp;
+//             D += D_PREC7[i]*xp;
+//             if (i == CD_PREC7_N-1) return C/D;
+//             xp *= x;
+//         }
+
+
+//     }
+// }
+
+// double R3(double x, int precision) {
+//     int i;
+//     double E = 0.0, F = 0.0;
+//     double xp = 1.0;
+
+//     switch (precision) {
+//     case 7:
+//         for (i = 0; i < EF_PREC7_N; i++) {
+//             E += E_PREC7[i]*xp;
+//             F += F_PREC7[i]*xp;
+//             if (i == EF_PREC7_N-1) return E/F;
+//             xp *= x;
+//         }
+//     case 16: default:
+//         for (i = 0; i < EF_PREC7_N; i++) {
+//             E += E_PREC7[i]*xp;
+//             F += F_PREC7[i]*xp;
+//             if (i == EF_PREC7_N-1) return E/F;
+//             xp *= x;
+//         }
+
+
+//     }
+// }
+
+
+
+float probitf(float p) {
+    float r, q = p - 0.5;
     if (fabs(q) <= SPLIT_1) {
-        return q * R1(SPLIT_1*SPLIT_1- q*q, precision);
+        return q * R1f(SPLIT_1*SPLIT_1- q*q);
     } else {
-        r = sqrt(-log(fmin(p, 1-p)));
+        r = sqrtf(-logf(fminf(p, 1-p)));
         if (r <= SPLIT_2) {
-            return copysign(R2(r-R_CONST, precision), q);
+            return copysignf(R2f(r-R_CONST), q);
         } else {
-            return copysign(R3(r-SPLIT_2, precision), q);
+            return copysignf(R3f(r-SPLIT_2), q);
         }
     }
 }
 
-double probit7(double p) {
-    return probit(p, 7);
-}
+// double probit(double p) {
+//     double r, q = p - 0.5;
+//     if (fabs(q) <= SPLIT_1) {
+//         return q * R1(SPLIT_1*SPLIT_1- q*q, 16);
+//     } else {
+//         r = sqrt(-log(fmin(p, 1-p)));
+//         if (r <= SPLIT_2) {
+//             return copysign(R2(r-R_CONST, 16), q);
+//         } else {
+//             return copysign(R3(r-SPLIT_2, 16), q);
+//         }
+//     }
+// }
 
-double probit16(double p) {
-    return probit(p, 16);
+double probit(double p) {
+    return probitf(p);
 }
 
 /*********** Test functions ************/
@@ -162,6 +211,23 @@ double mantissa10(double x) {
         a *= greater ? 0.1 : 10.;
     }
     return copysign(a, x);
+}
+
+int hash_checkf(const float* A, const float* B, double hash, int N, char* name) {
+    double sum = 0.0;
+    int i, exponent;
+    for (i = 0; i < N; i++) {
+        sum += mantissa10(A[i]);
+        sum += mantissa10(B[i]);
+    }
+    sum -= 1.0;
+
+    int compare = fabs(sum - hash) <= 1e-6;
+    printf("> Hash %s %s\n", name, compare ? "":"               FAIL");
+    printf("  Calculated: %12.10f\n", sum);
+    printf("    Expected: %12.10f\n", hash);
+    printf("  Match? %s\n\n", compare ? "Yes":"No");
+    return !compare;
 }
 
 int hash_check(const double* A, const double* B, double hash, int N, char* name) {
@@ -197,9 +263,9 @@ int check_probit_vals(void) {
 
 int test_probit(void) {
     printf("---- Coefficient hash checks ----\n\n");
-    hash_check(A_PREC7, B_PREC7, AB_PREC7_HASH, AB_PREC7_N, "AB_PREC7");
-    hash_check(C_PREC7, D_PREC7, CD_PREC7_HASH, CD_PREC7_N, "CD_PREC7");
-    hash_check(E_PREC7, F_PREC7, EF_PREC7_HASH, EF_PREC7_N, "EF_PREC7");
+    hash_checkf(A_PREC7, B_PREC7, AB_PREC7_HASH, AB_PREC7_N, "AB_PREC7");
+    hash_checkf(C_PREC7, D_PREC7, CD_PREC7_HASH, CD_PREC7_N, "CD_PREC7");
+    hash_checkf(E_PREC7, F_PREC7, EF_PREC7_HASH, EF_PREC7_N, "EF_PREC7");
 
     check_probit_vals();
 

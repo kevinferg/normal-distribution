@@ -10,8 +10,11 @@ Published by: Wiley for the Royal Statistical Society
 Stable URL: https://www.jstor.org/stabl/2347330
 *********************************************************************/
 
-double probit7(double p);
-double probit16(double p);
+float probitf(float p);
+double probit(double p);
+
+#define probit7 probitf
+#define probit16 probit
 
 /*********** Test functions ************/
 int test_probit(void);
