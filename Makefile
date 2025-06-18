@@ -37,7 +37,7 @@ CC = gcc
 VPATH = $(SRCDIR):$(OBJDIR)
 INC_LOCATIONS = $(INCDIR)
 INC_FLAGS = $(addprefix -I,$(INC_LOCATIONS))
-CFLAGS = $(INC_FLAGS) -MMD -MP
+CFLAGS = $(INC_FLAGS) -MMD -MP -O2
 
 srcs = $(notdir $(wildcard $(SRCDIR)/*.c))
 deps = $(srcs:.c=.d)
