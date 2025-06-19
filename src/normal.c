@@ -16,6 +16,7 @@ const char* alg_names[ALGMAX] = {
     [MARSAGLIA] = "Marsaglia Polar",
     [IRWIN_HALL_INT] = "Irwin-Hall with Integers",
     [BHASKARA_MULLER] = "Box-Muller with Fast Trig",
+    [UNWRAP_UNIFORM] = "Unwrapped Uniform",
 };
 
 const NormalAlgFunction alg_functions[ALGMAX] = {
@@ -26,6 +27,7 @@ const NormalAlgFunction alg_functions[ALGMAX] = {
     [MARSAGLIA] = normal_marsaglia,
     [IRWIN_HALL_INT] = normal_irwin_hall_int,
     [BHASKARA_MULLER] = normal_bhaskara_muller,
+    [UNWRAP_UNIFORM] = normal_unwrap_uniform,
 };
 
 
@@ -134,6 +136,33 @@ int normal_bhaskara_muller(double* arr, int N) {
         arr[i]   = C * fastcos(2*PI * V);
         if (i == N-1) return 0;
         arr[i+1] = C * fastsin(2*PI * V);
+    }
+    return 0;
+}
+
+
+static double get_unwrapped_normal(double x, double r) {
+    static const int ks[10] = {0,-1,1,-2,2,-3,3,-4,4,-5};
+    r *= 2.506628275; // sqrt(2*pi)
+    int k, i;
+    double p = 0;
+    double xt;
+    for (i = 0; i < 10; i++) {
+        k = ks[i];
+        xt = x + k;
+        p += exp(-0.5*xt*xt);
+        if (r < p) break;
+    }
+    return (x+k);
+}
+
+int normal_unwrap_uniform(double* arr, int N) {
+    int i;
+    double x, r;
+    for (i = 0; i < N; i++) {
+        x = rand_unif_half_open();
+        r = rand_unif_half_open();
+        arr[i] = get_unwrapped_normal(x, r);
     }
     return 0;
 }

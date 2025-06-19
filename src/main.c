@@ -9,7 +9,7 @@
 #include "probit.h"
 #include "fasttrig.h"
 
-#define NUM_VALS 10000000
+#define NUM_VALS (RAND_MAX*100)
 
 void test_alg(void* args) {
     AlgArgs* A = (AlgArgs*) args;

@@ -28,58 +28,66 @@ Todo:
 ```
 ------------------------------------------------
 > "Rejection Sampling" Method
-> Sampling 10000000 numbers from N(0,1)
-    Mean:  -0.000533       Stdev:   0.994992
-Skewness:  -0.000673    Kurtosis:   2.914969
-Time (ms): 1601
+> Sampling 3276700 numbers from N(0,1)
+    Mean:  -0.000447       Stdev:   0.994831
+Skewness:  -0.001095    Kurtosis:   2.913895
+Time (ms): 3210
 ------------------------------------------------
 
 ------------------------------------------------
 > "Irwin-Hall" Method
-> Sampling 10000000 numbers from N(0,1)
-    Mean:   0.000376       Stdev:   1.000109
-Skewness:   0.000048    Kurtosis:   2.899250
-Time (ms): 1195
+> Sampling 3276700 numbers from N(0,1)
+    Mean:   0.000954       Stdev:   1.000047
+Skewness:   0.000660    Kurtosis:   2.898350
+Time (ms): 2648
 ------------------------------------------------
 
 ------------------------------------------------
 > "Probability Integral Transform" Method
-> Sampling 10000000 numbers from N(0,1)
-    Mean:   0.000096       Stdev:   0.999577
-Skewness:  -0.001203    Kurtosis:   2.988304
-Time (ms): 295
+> Sampling 3276700 numbers from N(0,1)
+    Mean:   0.000322       Stdev:   1.000203
+Skewness:  -0.001708    Kurtosis:   2.995847
+Time (ms): 508
 ------------------------------------------------
 
 ------------------------------------------------
 > "Box-Muller" Method
-> Sampling 10000000 numbers from N(0,1)
-    Mean:  -0.001156       Stdev:   1.000016
-Skewness:   0.000478    Kurtosis:   2.996292
-Time (ms): 748
+> Sampling 3276700 numbers from N(0,1)
+    Mean:   0.000443       Stdev:   0.999773
+Skewness:  -0.000006    Kurtosis:   2.997802
+Time (ms): 721
 ------------------------------------------------
 
 ------------------------------------------------
 > "Marsaglia Polar" Method
-> Sampling 10000000 numbers from N(0,1)
-    Mean:   0.000257       Stdev:   1.000170
-Skewness:   0.000639    Kurtosis:   2.999720
-Time (ms): 424
+> Sampling 3276700 numbers from N(0,1)
+    Mean:  -0.000343       Stdev:   1.000503
+Skewness:   0.000538    Kurtosis:   2.995293
+Time (ms): 699
 ------------------------------------------------
 
 ------------------------------------------------
 > "Irwin-Hall with Integers" Method
-> Sampling 10000000 numbers from N(0,1)
-    Mean:  -0.000649       Stdev:   1.000055
-Skewness:   0.000587    Kurtosis:   2.896108
-Time (ms): 1013
+> Sampling 3276700 numbers from N(0,1)
+    Mean:   0.000793       Stdev:   1.000017
+Skewness:   0.002130    Kurtosis:   2.898107
+Time (ms): 1921
 ------------------------------------------------
 
 ------------------------------------------------
 > "Box-Muller with Fast Trig" Method
-> Sampling 10000000 numbers from N(0,1)
-    Mean:  -0.000338       Stdev:   0.999357
-Skewness:   0.000975    Kurtosis:   2.995304
-Time (ms): 481
+> Sampling 3276700 numbers from N(0,1)
+    Mean:  -0.000295       Stdev:   0.998977
+Skewness:   0.000896    Kurtosis:   2.996956
+Time (ms): 622
+------------------------------------------------
+
+------------------------------------------------
+> "Unwrapped Uniform" Method
+> Sampling 3276700 numbers from N(0,1)
+    Mean:   0.000656       Stdev:   0.999612
+Skewness:   0.001184    Kurtosis:   2.996553
+Time (ms): 2454
 ------------------------------------------------
 ```
 
