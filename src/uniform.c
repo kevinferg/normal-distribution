@@ -17,3 +17,11 @@ double rand_unif_closed(void) {
 double rand_unif_open(void) {
     return ((double) (rand() + 1)) / (RAND_MAX + 2.0);
 }
+
+int uniform_multiple(double* arr, int N) {
+    int i;
+    for (i = 0; i < N; i++) {
+        arr[i] = rand_unif_half_open();
+    }
+    return 0;
+}

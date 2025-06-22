@@ -10,4 +10,6 @@ double rand_unif_closed(void);
 // Sample uniformly on (0,1)
 double rand_unif_open(void);
 
+int uniform_multiple(double* arr, int N);
+
 #endif

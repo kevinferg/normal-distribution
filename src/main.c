@@ -18,6 +18,10 @@ void test_alg(void* args) {
     return;
 }
 
+void print_summary_header(void) {
+    printf("   ALGORITHM     TIME:NS          MEAN      STDDEV    SKEWNESS    KURTOSIS\n");
+}
+
 int get_method_summary(AlgID id, int N) {
     double t;
     double mean, stdev, skew, kurt;
@@ -32,16 +36,18 @@ int get_method_summary(AlgID id, int N) {
     skew = get_skewness(A.arr, N);
     kurt = get_kurtosis(A.arr, N);
 
-    printf("------------------------------------------------\n");
-    printf("> \"%s\" Method\n",alg_names[id]);
-    printf("> Sampling %d numbers from N(0,1)\n", N);
-    printf("    Mean:  % 0.6f    "
-           "   Stdev:  % 0.6f\n", mean, stdev);
-    printf("Skewness:  % 0.6f    "
-           "Kurtosis:  % 0.6f\n", skew, kurt);
+    // printf("------------------------------------------------\n");
+    // printf("> \"%s\" Method\n",alg_names[id]);
+    // printf("> Sampling %d numbers from N(0,1)\n", N);
+    // printf("    Mean:  % 0.6f    "
+    //        "   Stdev:  % 0.6f\n", mean, stdev);
+    // printf("Skewness:  % 0.6f    "
+    //        "Kurtosis:  % 0.6f\n", skew, kurt);
 
-    printf("Time (ms): %3.f\n", t*1000);
-    printf("------------------------------------------------\n\n");
+    // printf("Time (ms): %3.f\n", t*1000);
+    // printf("------------------------------------------------\n\n");
+
+    printf("%12s       %5.f    % 10.6f  % 10.6f  % 10.6f  % 10.6f\n", alg_names_short[id], t/(NUM_VALS)*1e9, mean, stdev, skew, kurt);
 
     free(vals);
     return 0;
@@ -51,6 +57,7 @@ int main(int argc, char** argv) {
 
     AlgID i;
 
+    print_summary_header();
     for (i = 0; i < ALGMAX; i++) {
         get_method_summary(i, NUM_VALS);
     }

@@ -5,10 +5,11 @@ Comparing several algorithms for sampling from a normal distribution. Includes a
 
 The currently implemented methods are:
 - Rejection Sampling
-- Irwin-Hall
+- Irwin-Hall (+ integer math variant)
 - Probability Integral Transform
-- Box-Muller
+- Box-Muller (+ fast trig variant)
 - Marsaglia Polar
+- 'Unwrapped' Uniform Distribution
 
 Descriptions of these can be found on [Wikipedia](https://en.wikipedia.org/wiki/Normal_distribution#Generating_values_from_normal_distribution).
 
@@ -26,69 +27,19 @@ Todo:
 ## Results
 
 ```
-------------------------------------------------
-> "Rejection Sampling" Method
-> Sampling 3276700 numbers from N(0,1)
-    Mean:  -0.000447       Stdev:   0.994831
-Skewness:  -0.001095    Kurtosis:   2.913895
-Time (ms): 3210
-------------------------------------------------
-
-------------------------------------------------
-> "Irwin-Hall" Method
-> Sampling 3276700 numbers from N(0,1)
-    Mean:   0.000954       Stdev:   1.000047
-Skewness:   0.000660    Kurtosis:   2.898350
-Time (ms): 2648
-------------------------------------------------
-
-------------------------------------------------
-> "Probability Integral Transform" Method
-> Sampling 3276700 numbers from N(0,1)
-    Mean:   0.000322       Stdev:   1.000203
-Skewness:  -0.001708    Kurtosis:   2.995847
-Time (ms): 508
-------------------------------------------------
-
-------------------------------------------------
-> "Box-Muller" Method
-> Sampling 3276700 numbers from N(0,1)
-    Mean:   0.000443       Stdev:   0.999773
-Skewness:  -0.000006    Kurtosis:   2.997802
-Time (ms): 721
-------------------------------------------------
-
-------------------------------------------------
-> "Marsaglia Polar" Method
-> Sampling 3276700 numbers from N(0,1)
-    Mean:  -0.000343       Stdev:   1.000503
-Skewness:   0.000538    Kurtosis:   2.995293
-Time (ms): 699
-------------------------------------------------
-
-------------------------------------------------
-> "Irwin-Hall with Integers" Method
-> Sampling 3276700 numbers from N(0,1)
-    Mean:   0.000793       Stdev:   1.000017
-Skewness:   0.002130    Kurtosis:   2.898107
-Time (ms): 1921
-------------------------------------------------
-
-------------------------------------------------
-> "Box-Muller with Fast Trig" Method
-> Sampling 3276700 numbers from N(0,1)
-    Mean:  -0.000295       Stdev:   0.998977
-Skewness:   0.000896    Kurtosis:   2.996956
-Time (ms): 622
-------------------------------------------------
-
-------------------------------------------------
-> "Unwrapped Uniform" Method
-> Sampling 3276700 numbers from N(0,1)
-    Mean:   0.000656       Stdev:   0.999612
-Skewness:   0.001184    Kurtosis:   2.996553
-Time (ms): 2454
-------------------------------------------------
+   ALGORITHM     TIME:NS          MEAN      STDDEV    SKEWNESS    KURTOSIS
+   -----------------------------------------------------------------------
+   rejection         988     -0.000447    0.994831   -0.001095    2.913895
+  irwin-hall         781      0.000954    1.000047    0.000660    2.898350
+    prob-int         168      0.000322    1.000203   -0.001708    2.995847
+  box-muller         233      0.000443    0.999773   -0.000006    2.997802
+   marsaglia         215     -0.000343    1.000503    0.000538    2.995293
+   irwin-int         608      0.000793    1.000017    0.002130    2.898107
+bhask-muller         201     -0.000295    0.998977    0.000896    2.996956
+ unwrap-unif         756      0.000656    0.999612    0.001184    2.996553
+   near-mean         450      0.000093    0.997186   -0.002742    2.978383
+   _______________________________________________________________________
+   (UNIFORM)          63      0.499921    0.288663    0.000283    1.800145
 ```
 
 ## Compilation and Usage

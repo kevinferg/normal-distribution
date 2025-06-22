@@ -16,6 +16,9 @@ double probit(double p);
 #define probit7 probitf
 #define probit16 probit
 
+float probit_approx_rational(float y); // Rational approximation based on Taylor series of inverse error function
+float probit_approx_interp(float y);   // Small lookup table + linear interpolation
+
 /*********** Test functions ************/
 int test_probit(void);
 

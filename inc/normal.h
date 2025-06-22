@@ -10,7 +10,9 @@ typedef enum AlgID {
     IRWIN_HALL_INT,
     BHASKARA_MULLER,
     UNWRAP_UNIFORM,
-    ALGMAX
+    NEAR_NORMAL_MEAN,
+
+    UNIFORM, ALGMAX
 } AlgID;
 
 typedef struct AlgArgs {
@@ -22,6 +24,7 @@ typedef struct AlgArgs {
 typedef int (*NormalAlgFunction)(double*, int);
 
 extern const char* alg_names[ALGMAX];
+extern const char* alg_names_short[ALGMAX];
 extern const NormalAlgFunction alg_functions[ALGMAX];
 
 /************ Algorithms ************/
@@ -41,5 +44,7 @@ int normal_irwin_hall_int(double* arr, int N);
 int normal_bhaskara_muller(double* arr, int N);
 
 int normal_unwrap_uniform(double* arr, int N);
+
+int normal_near_normal_mean(double* arr, int N);
 
 #endif

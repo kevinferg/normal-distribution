@@ -17,6 +17,21 @@ const char* alg_names[ALGMAX] = {
     [IRWIN_HALL_INT] = "Irwin-Hall with Integers",
     [BHASKARA_MULLER] = "Box-Muller with Fast Trig",
     [UNWRAP_UNIFORM] = "Unwrapped Uniform",
+    [NEAR_NORMAL_MEAN] = "Mean of near-normal distributions",
+    [UNIFORM] = "Baseline uniform distribution"
+};
+
+const char* alg_names_short[ALGMAX] = {
+    [ACCEPT_REJECT] = "rejection",
+    [IRWIN_HALL] = "irwin-hall",
+    [PROB_INT] = "prob-int",
+    [BOX_MULLER] = "box-muller",
+    [MARSAGLIA] = "marsaglia",
+    [IRWIN_HALL_INT] = "irwin-int",
+    [BHASKARA_MULLER] = "bhask-muller",
+    [UNWRAP_UNIFORM] = "unwrap-unif",
+    [NEAR_NORMAL_MEAN] = "near-mean",
+    [UNIFORM] = "(UNIFORM)"
 };
 
 const NormalAlgFunction alg_functions[ALGMAX] = {
@@ -28,6 +43,8 @@ const NormalAlgFunction alg_functions[ALGMAX] = {
     [IRWIN_HALL_INT] = normal_irwin_hall_int,
     [BHASKARA_MULLER] = normal_bhaskara_muller,
     [UNWRAP_UNIFORM] = normal_unwrap_uniform,
+    [NEAR_NORMAL_MEAN] = normal_near_normal_mean,
+    [UNIFORM] = uniform_multiple
 };
 
 
@@ -67,16 +84,10 @@ int normal_irwin_hall(double* arr, int N) {
     return 0;
 }
 
-
-double probit_approx(double y) {
-    // TODO: Seek a better approximation
-    return log(y/(1-y)) * sqrt(PI/8.0);
-}
-
 int normal_prob_int(double* arr, int N) {
     int i;
     for (i = 0; i < N; i++) {
-        arr[i] = probit7(rand_unif_open());
+        arr[i] = probitf(rand_unif_open());
     }
     return 0;
 }
@@ -163,6 +174,24 @@ int normal_unwrap_uniform(double* arr, int N) {
         x = rand_unif_half_open();
         r = rand_unif_half_open();
         arr[i] = get_unwrapped_normal(x, r);
+    }
+    return 0;
+}
+
+
+int normal_near_normal_mean(double* arr, int N) {
+    int i;
+    float x1, x2, x3, x4;
+    for (i = 0; i < N; i++) {
+        x1 = rand_unif_open();
+        x2 = rand_unif_open();
+        x3 = rand_unif_open();
+        x4 = rand_unif_open();
+        x1 = probit_approx_interp(x1);
+        x2 = probit_approx_interp(x2);
+        x3 = probit_approx_interp(x3);
+        x4 = probit_approx_interp(x4);
+        arr[i] = (x1+x2+x3+x4)*.5; // .5 = sqrt(1/4)
     }
     return 0;
 }
