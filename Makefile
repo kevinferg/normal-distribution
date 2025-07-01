@@ -35,23 +35,28 @@ CC = gcc
 
 # Directory and file handling
 VPATH = $(SRCDIR):$(OBJDIR)
-INC_LOCATIONS = $(INCDIR)
+INC_LOCATIONS = $(shell find $(INCDIR) $(SRCDIR) $(RAYLIB_INC) -type d)
 INC_FLAGS = $(addprefix -I,$(INC_LOCATIONS))
-CFLAGS = $(INC_FLAGS) -MMD -MP -O2
+CFLAGS = $(INC_FLAGS) -std=c99 -O2 -MMD -MP
 
-srcs = $(notdir $(wildcard $(SRCDIR)/*.c))
-deps = $(srcs:.c=.d)
-src_objs = $(addprefix $(OBJDIR)/,$(srcs:.c=.o))
+# List of all .c files in src/, recursively
+srcs = $(shell find $(SRCDIR) -name "*.c")
+src_objs = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(srcs))
+deps     = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.d, $(srcs))
 
--include $(deps)
 
-all: $(BINDIR)/$(MAIN)$(EXE)
+all: $(BINDIR)/main$(EXE)
 
-$(BINDIR)/$(MAIN)$(EXE): $(src_objs) | silent
-	$(CC) $^ -o $@ -s
+$(BINDIR)/main$(EXE): $(src_objs)
+	@echo Linking $@ from obj/*
+	@$(CC) $^ -o $@ -s
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@echo Compiling $< to $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+-include $(deps)
 
 .PHONY: clean all
 
@@ -60,10 +65,10 @@ silent:
 
 clean:
 ifeq ($(UNAME_S),Linux)
-	$(RM) -f $(OBJDIR)/* $(BINDIR)/*
+	$(RM) -f $(src_objs) $(deps) $(BINDIR)/*
 	$(TOUCH) $(OBJDIR)/.gitkeep $(BINDIR)/.gitkeep
 else
-	$(RM) "$(OBJDIR)$(SLASH)*" "$(BINDIR)$(SLASH)*"
-	$(TOUCH) "$(OBJDIR)$(SLASH).gitkeep"
-	$(TOUCH) "$(BINDIR)$(SLASH).gitkeep"
+	$(RM) $(subst /,$(SLASH),$(src_objs)) $(subst /,$(SLASH),$(deps)) $(BINDIR)$(SLASH)* 2>nul || exit 0
+	$(TOUCH) $(OBJDIR)$(SLASH).gitkeep
+	$(TOUCH) $(BINDIR)$(SLASH).gitkeep
 endif

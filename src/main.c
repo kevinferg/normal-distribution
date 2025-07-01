@@ -36,17 +36,6 @@ int get_method_summary(AlgID id, int N) {
     skew = get_skewness(A.arr, N);
     kurt = get_kurtosis(A.arr, N);
 
-    // printf("------------------------------------------------\n");
-    // printf("> \"%s\" Method\n",alg_names[id]);
-    // printf("> Sampling %d numbers from N(0,1)\n", N);
-    // printf("    Mean:  % 0.6f    "
-    //        "   Stdev:  % 0.6f\n", mean, stdev);
-    // printf("Skewness:  % 0.6f    "
-    //        "Kurtosis:  % 0.6f\n", skew, kurt);
-
-    // printf("Time (ms): %3.f\n", t*1000);
-    // printf("------------------------------------------------\n\n");
-
     printf("%12s       %5.f    % 10.6f  % 10.6f  % 10.6f  % 10.6f\n", alg_names_short[id], t/(NUM_VALS)*1e9, mean, stdev, skew, kurt);
 
     free(vals);
@@ -59,9 +48,12 @@ int main(int argc, char** argv) {
 
     print_summary_header();
     for (i = 0; i < ALGMAX; i++) {
+        if (i == 0)        printf("   -----------------------------------------------------------------------\n");
+        if (i == ALGMAX-1) printf("   _______________________________________________________________________\n");
         get_method_summary(i, NUM_VALS);
     }
-
+    printf("IDEAL NORMAL          -       0.0         1.0         0.0         3.0     \n");
+    
     // test_probit();
     // test_fasttrig();
 
