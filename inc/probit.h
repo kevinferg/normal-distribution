@@ -7,7 +7,7 @@ Author: Michael J. Wichura
 Source: Journal of the Royal Statistical Society. Series C (Applied
         Statistics), 1988, Vol. 37, No. 3 (1988), pp. 477-484
 Published by: Wiley for the Royal Statistical Society
-Stable URL: https://www.jstor.org/stabl/2347330
+Stable URL: https://www.jstor.org/stable/2347330
 *********************************************************************/
 
 float probitf(float p);

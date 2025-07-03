@@ -53,7 +53,7 @@ IDEAL NORMAL          -       0.0         1.0         0.0         3.0
 
 ### `unwrap-unif`: 'Unwrapped' uniform distribution
 
-Taking a standard normally distributed random variable Z~N(0,1) and wrapping it onto [0,1) -- that is, Z - floor(Z) -- results in a *very* nearly uniform distribution. (Note: a 12-Irwin-Hall distribution gives exact uniformity.) This algorithm starts with a uniform variable and undoes that wrapping.
+Taking a standard normally distributed random variable Z~N(0,1) and wrapping it onto [0,1),  `Z - floor(Z)`, results in a *very* nearly uniform distribution. (Note: a 12-Irwin-Hall distribution gives exact uniformity.) This algorithm starts with a uniform variable and undoes that wrapping.
 
 1. Start with the wrapped location by sampling a float X~U[0,1)
 2. Determine which unit bin it started from by:
@@ -96,7 +96,7 @@ This algorithm is a slight modification of Box-Muller to avoid using sine/cosine
 
 If the CDF of a 1-D distribution is known, a uniform random sample can be transformed into a sample of the target distribution by inverting the CDF. That is, you uniformly randomly sample a percentile, and then return the value corresponding to that percentile.
 
-Annoyingly, the CDF for a normal distribution (the 'probit' function) is non-elementary, so some kind of approximation has to be used. I use [Wichura's piecewise polynomial](https://www.jstor.org/stabl/2347330) to get ~7 decimal places of accuracy. 
+Annoyingly, the CDF for a normal distribution (the 'probit' function) is non-elementary, so some kind of approximation has to be used. I use [Wichura's piecewise polynomial](https://www.jstor.org/stable/2347330) to get ~7 decimal places of accuracy. 
 
 1. Sample a random variable `X~U[0,1)`
 2. Return `probit(X)`
