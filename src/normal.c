@@ -20,6 +20,7 @@ const char* alg_names[ALGMAX] = {
     [UNWRAP_UNIFORM] = "Unwrapped Uniform",
     [LOOKUP] = "Lookup table",
     [RADEMACHER] = "Weighted Rademacher Sum",
+    [COARSE_MEAN] = "Mean of 4 approximate normals",
     [UNIFORM] = "Baseline uniform distribution"
 };
 
@@ -34,6 +35,7 @@ const char* alg_names_short[ALGMAX] = {
     [UNWRAP_UNIFORM] = "unwrap-unif",
     [LOOKUP] = "lookup",
     [RADEMACHER] = "rademacher",
+    [COARSE_MEAN] = "coarse-mean",
     [UNIFORM] = "(UNIFORM)"
 };
 
@@ -48,6 +50,7 @@ const NormalAlgFunction alg_functions[ALGMAX] = {
     [UNWRAP_UNIFORM] = normal_unwrap_uniform,
     [LOOKUP] = normal_lookup,
     [RADEMACHER] = normal_rademacher,
+    [COARSE_MEAN] = normal_coarse_mean,
     [UNIFORM] = uniform_multiple
 };
 
@@ -244,10 +247,34 @@ int normal_rademacher(double* arr, int N) {
         x += (r&1) *  12450; r >>= 1;
         x += (r&1) *  11724; r >>= 1;
         x += (r&1) *  11038; r >>= 1;
-        x += (r&1) *  10394; r >>= 1;
+        x += (r&1) *  10394;
 
         arr[i] = ((float) x / (float) 32768); 
 
     }
     return 0;
+}
+
+int normal_coarse_mean(double* arr, int N) {
+    static const int16_t prob0[16] = {-8755, -5876, -4469, -3438, -2556, -1775, -1041, -344, 350, 1049, 1785, 2572, 3449, 4475, 5852, 8725};
+    static const int16_t prob1[16] = {-8714, -5869, -4508, -3467, -2597, -1798, -1049, -346, 361, 1065, 1790, 2565, 3446, 4494, 5872, 8754};
+    static const int16_t prob2[16] = {-8766, -5869, -4480, -3458, -2581, -1798, -1067, -364, 333, 1043, 1785, 2570, 3458, 4529, 5923, 8743};
+    static const int16_t prob3[8]  = {-7300, -3982, -2181, -704, 700, 2178, 3973, 7316};
+
+    int i;
+    int x;
+    unsigned int r;
+
+    for (i = 0; i < N; i++) {
+        r = rand();
+        x  =  prob0[r&15]; r >>= 4;
+        x +=  prob1[r&15]; r >>= 4;
+        x +=  prob2[r&15]; r >>= 4;
+        x +=  prob3[r&7]; // only 3 of 4 bits are used here, due to rand() limits
+
+        arr[i] = (float) x / (float) (8192.f);
+    }
+    return 0;
+
+
 }

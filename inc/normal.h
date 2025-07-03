@@ -4,14 +4,15 @@
 typedef enum AlgID {
     ACCEPT_REJECT,
     IRWIN_HALL, 
-    PROB_INT, 
+    UNWRAP_UNIFORM,
+    IRWIN_HALL_INT,
     BOX_MULLER, 
     MARSAGLIA, 
-    IRWIN_HALL_INT,
     BHASKARA_MULLER,
-    UNWRAP_UNIFORM,
-    LOOKUP,
+    PROB_INT, 
     RADEMACHER,
+    LOOKUP,
+    COARSE_MEAN,
 
     UNIFORM, ALGMAX
 } AlgID;
@@ -49,5 +50,7 @@ int normal_unwrap_uniform(double* arr, int N);
 int normal_lookup(double* arr, int N);
 
 int normal_rademacher(double* arr, int N);
+
+int normal_coarse_mean(double* arr, int N);
 
 #endif
