@@ -299,6 +299,12 @@ float probit_approx_interp(float y) {
     return sign * (w*val1 + (1-w)*val2);
 }
 
+#include "probit_table.h"
+
+float probit_lookup(int index) {
+    return probit_table[index];
+}
+
 /*********** Test functions ************/
 
 double mantissa10(double x) {

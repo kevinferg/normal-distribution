@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <math.h>
 #include "normal.h"
 #include "uniform.h"
@@ -17,7 +18,8 @@ const char* alg_names[ALGMAX] = {
     [IRWIN_HALL_INT] = "Irwin-Hall with Integers",
     [BHASKARA_MULLER] = "Box-Muller with Fast Trig",
     [UNWRAP_UNIFORM] = "Unwrapped Uniform",
-    [NEAR_NORMAL_MEAN] = "Mean of near-normal distributions",
+    [LOOKUP] = "Lookup table",
+    [RADEMACHER] = "Weighted Rademacher Sum",
     [UNIFORM] = "Baseline uniform distribution"
 };
 
@@ -30,7 +32,8 @@ const char* alg_names_short[ALGMAX] = {
     [IRWIN_HALL_INT] = "irwin-int",
     [BHASKARA_MULLER] = "bhask-muller",
     [UNWRAP_UNIFORM] = "unwrap-unif",
-    [NEAR_NORMAL_MEAN] = "near-mean",
+    [LOOKUP] = "lookup",
+    [RADEMACHER] = "rademacher",
     [UNIFORM] = "(UNIFORM)"
 };
 
@@ -43,7 +46,8 @@ const NormalAlgFunction alg_functions[ALGMAX] = {
     [IRWIN_HALL_INT] = normal_irwin_hall_int,
     [BHASKARA_MULLER] = normal_bhaskara_muller,
     [UNWRAP_UNIFORM] = normal_unwrap_uniform,
-    [NEAR_NORMAL_MEAN] = normal_near_normal_mean,
+    [LOOKUP] = normal_lookup,
+    [RADEMACHER] = normal_rademacher,
     [UNIFORM] = uniform_multiple
 };
 
@@ -179,19 +183,70 @@ int normal_unwrap_uniform(double* arr, int N) {
 }
 
 
-int normal_near_normal_mean(double* arr, int N) {
+int normal_lookup(double* arr, int N) {
     int i;
-    float x1, x2, x3, x4;
+    uint16_t r;
     for (i = 0; i < N; i++) {
-        x1 = rand_unif_open();
-        x2 = rand_unif_open();
-        x3 = rand_unif_open();
-        x4 = rand_unif_open();
-        x1 = probit_approx_interp(x1);
-        x2 = probit_approx_interp(x2);
-        x3 = probit_approx_interp(x3);
-        x4 = probit_approx_interp(x4);
-        arr[i] = (x1+x2+x3+x4)*.5; // .5 = sqrt(1/4)
+        r = rand();
+        arr[i] = probit_lookup(r);
+    }
+    return 0;
+}
+
+
+int normal_rademacher(double* arr, int N) {
+    int i;
+    int x;
+    unsigned int r;
+
+    for (i = 0; i < N; i++) {
+        r = rand();
+        // x  = (r&1) *   4475; r >>= 1;
+        // x += (r&1) *   5159; r >>= 1;
+        // x += (r&1) *   5947; r >>= 1;
+        // x += (r&1) *   6856; r >>= 1;
+        // x += (r&1) *   7904; r >>= 1;
+        // x += (r&1) *   9111; r >>= 1;
+        // x += (r&1) *  10504; r >>= 1;
+        // x += (r&1) *  12109; r >>= 1;
+        // x += (r&1) *  13960; r >>= 1;
+        // x += (r&1) *  16093; r >>= 1;
+        // x += (r&1) *  18552; r >>= 1;
+        // x += (r&1) *  21387; r >>= 1;
+        // x += (r&1) *  24656; r >>= 1;
+        // x += (r&1) *  28424; r >>= 1;
+        // x += (r&1) *  32768; r >>= 1;
+        
+        // x -= 217905/2;
+
+        // arr[i] = ((float) x * ((float) 2. / (float) 217905.));  // 32768 * 12/7
+        /*
+
+        
+        w = sqrt((1-a^2)/(1-a^(2n))) = s(1-a)/(1-a^n)
+        
+        n = 15 // number of bit trials
+        s = 3.5 // max value
+        --> w = .456352;
+        --> a = .893825;
+
+        w_i = w * a^i
+        x = 50% w_i, 50% -w_i
+        
+        */
+
+        float w = .3683;//.456352;
+        float a = .9416;//.893825;
+        float x = 0;
+        for (int j = 0; j < 15; j++) {
+            x += (r&1)? w: -w; 
+            r >>= 1;
+            w *= a;
+        }
+
+        arr[i] = x;
+
+
     }
     return 0;
 }
