@@ -23,9 +23,9 @@ void print_summary_header(void) {
 }
 
 int get_method_summary(AlgID id, int N) {
-    double t;
-    double mean, stdev, skew, kurt;
-    double* vals = malloc(N * sizeof(double));
+    float t;
+    float mean, stdev, skew, kurt;
+    float* vals = malloc(N * sizeof(float));
     if (vals == NULL) return -1;
 
     AlgArgs A = {.id=id, .arr=vals, .N=N};

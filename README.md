@@ -8,19 +8,19 @@ Comparing several algorithms for sampling from a normal distribution. Includes a
 ```
    ALGORITHM     TIME:NS          MEAN      STDDEV    SKEWNESS    KURTOSIS
    -----------------------------------------------------------------------
-   rejection         949     -0.000447    0.994831   -0.001095    2.913895
-  irwin-hall         772      0.000954    1.000047    0.000660    2.898350
- unwrap-unif         744      0.000567    0.999774    0.001360    2.995205
-   irwin-int         598      0.000574    1.001000   -0.000931    2.901227
-  box-muller         227     -0.000809    1.000156   -0.001216    2.998370
-   marsaglia         220     -0.000380    1.000911   -0.002132    3.000197
-bhask-muller         200      0.000684    0.999924    0.000625    2.998119
-    prob-int         150     -0.000012    0.999587   -0.000055    2.991852
-  rademacher          80      0.000220    1.000452    0.001067    2.834682
-      lookup          78      0.000075    0.998955   -0.002427    2.987569
- coarse-mean          75     -0.000750    0.999836    0.000443    2.960734
+   rejection        1014     -0.000447    0.993344   -0.001100    2.918933
+ unwrap-unif         761      0.000567    0.998294    0.001364    2.999860
+  irwin-hall         740      0.000954    0.998562    0.000663    2.903222
+   irwin-int         603      0.000574    0.999528   -0.000935    2.905955
+  box-muller         220     -0.000809    0.998673   -0.001221    3.002985
+   marsaglia         204     -0.000380    0.999416   -0.002142    3.004900
+bhask-muller         192      0.000684    0.998433    0.000628    3.002840
+    prob-int         139     -0.000012    0.998090   -0.000055    2.996614
+  rademacher          86      0.000220    0.999000    0.001072    2.839457
+      lookup          63      0.000075    0.997472   -0.002438    2.992218
+ coarse-mean          63     -0.000750    0.998384    0.000445    2.965112
    _______________________________________________________________________
-   (UNIFORM)          65      0.500077    0.288752   -0.001075    1.799763
+   (UNIFORM)          56      0.500078    0.288495   -0.001095    1.800345
 IDEAL NORMAL          -       0.0         1.0         0.0         3.0
 ```
 
@@ -39,18 +39,6 @@ IDEAL NORMAL          -       0.0         1.0         0.0         3.0
 
 ---
 
-### `irwin-hall`: Sampling from an Irwin-Hall distribution
-
-1. Generate 12 random floating point numbers, each on [0,1)
-2. Add the numbers
-3. Subtract 6.0 and return the result
-
-`irwin-int` reduces the number of int-to-float conversions and floating point operations by sampling and adding random integers, and then converting once at the end.
-
-- [Wikipedia](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)
-
----
-
 ### `unwrap-unif`: 'Unwrapped' uniform distribution
 
 Taking a standard normally distributed random variable Z~N(0,1) and wrapping it onto [0,1),  `Z - floor(Z)`, results in a *very* nearly uniform distribution. (Note: a 12-Irwin-Hall distribution gives exact uniformity.) This algorithm starts with a uniform variable and undoes that wrapping.
@@ -61,6 +49,18 @@ Taking a standard normally distributed random variable Z~N(0,1) and wrapping it 
    - Evaluate the pdf at X, then X-1, then X+1, X-2, X+2, etc.
    - When the cumulative pdf exceeds r, you've found the correct bin n
 3. Return X + n
+
+---
+
+### `irwin-hall`: Sampling from an Irwin-Hall distribution
+
+1. Generate 12 random floating point numbers, each on [0,1)
+2. Add the numbers
+3. Subtract 6.0 and return the result
+
+`irwin-int` reduces the number of int-to-float conversions and floating point operations by sampling and adding random integers, and then converting once at the end.
+
+- [Wikipedia](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)
 
 ---
 

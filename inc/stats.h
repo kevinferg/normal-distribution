@@ -1,14 +1,14 @@
 #ifndef STATS_H
 #define STATS_H
 
-double get_mean(double* arr, int N);
+float get_mean(float* arr, int N);
 
-double get_stdev(double* arr, int N);
+float get_stdev(float* arr, int N);
 
-double get_variance(double* arr, int N);
+float get_variance(float* arr, int N);
 
-double get_skewness(double* arr, int N);
+float get_skewness(float* arr, int N);
 
-double get_kurtosis(double* arr, int N);
+float get_kurtosis(float* arr, int N);
 
 #endif
