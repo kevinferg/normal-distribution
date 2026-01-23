@@ -137,7 +137,7 @@ int normal_irwin_hall_int(float* arr, int N) {
     for (i = 0; i < N; i++) {
         sum = IH_HALF;
         for (j = 0; j < IH_TOTAL; j++) {
-            sum += rand();
+            sum += urand();
         }
         arr[i] = ((float) (sum)) /((float) (RAND_MAX + 2)) - ((float) IH_HALF);
     }
@@ -190,7 +190,7 @@ int normal_lookup(float* arr, int N) {
     int i;
     uint16_t r;
     for (i = 0; i < N; i++) {
-        r = rand();
+        r = urand();
         arr[i] = probit_lookup(r);
     }
     return 0;
@@ -231,7 +231,7 @@ int normal_rademacher(float* arr, int N) {
     unsigned int r;
 
     for (i = 0; i < N; i++) {
-        r = rand();
+        r = urand();
         x = -122846;
         x += (r&1) *  24136; r >>= 1;
         x += (r&1) *  22726; r >>= 1;
@@ -266,7 +266,7 @@ int normal_coarse_mean(float* arr, int N) {
     unsigned int r;
 
     for (i = 0; i < N; i++) {
-        r = rand();
+        r = urand();
         x  =  prob0[r&15]; r >>= 4;
         x +=  prob1[r&15]; r >>= 4;
         x +=  prob2[r&15]; r >>= 4;

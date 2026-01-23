@@ -1,18 +1,12 @@
 # Makefile
 
-# Usage:
-# Use `mingw32-make` instead of `make` on Windows
-# ----------------------------------------------------------------
-# mingw32-make         --> Builds executable in the bin/ directory
-# mingw32-make clean   --> Removes executable and object files
+SHELL := /usr/bin/bash
 
-# Directory names
 OBJDIR = obj
 INCDIR = inc
 SRCDIR = src
 BINDIR = bin
 
-# Final executable names (& corresponding sources)
 MAIN = main
 
 # Detect OS
@@ -33,17 +27,14 @@ endif
 
 CC = gcc
 
-# Directory and file handling
-VPATH = $(SRCDIR):$(OBJDIR)
-INC_LOCATIONS = $(shell find $(INCDIR) $(SRCDIR) $(RAYLIB_INC) -type d)
-INC_FLAGS = $(addprefix -I,$(INC_LOCATIONS))
+INC_LOCATIONS = $(shell find "$(INCDIR)" "$(SRCDIR)" -type d)
+INC_FLAGS     = $(addprefix -I,$(INC_LOCATIONS))
 CFLAGS = $(INC_FLAGS) -std=c99 -O2 -MMD -MP
 
-# List of all .c files in src/, recursively
-srcs = $(shell find $(SRCDIR) -name "*.c")
-src_objs = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(srcs))
-deps     = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.d, $(srcs))
-
+# Recursive source file discovery
+srcs      = $(shell find "$(SRCDIR)" -name "*.c")
+src_objs  = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(srcs))
+deps      = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.d, $(srcs))
 
 all: $(BINDIR)/main$(EXE)
 
@@ -58,17 +49,18 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 -include $(deps)
 
-.PHONY: clean all
+.PHONY: clean all silent
 
-silent:
-	@:
+silent: ;
 
 clean:
 ifeq ($(UNAME_S),Linux)
 	$(RM) -f $(src_objs) $(deps) $(BINDIR)/*
 	$(TOUCH) $(OBJDIR)/.gitkeep $(BINDIR)/.gitkeep
 else
-	$(RM) $(subst /,$(SLASH),$(src_objs)) $(subst /,$(SLASH),$(deps)) $(BINDIR)$(SLASH)* 2>nul || exit 0
+	$(RM) $(subst /,$(SLASH),$(src_objs)) \
+	      $(subst /,$(SLASH),$(deps)) \
+	      $(BINDIR)$(SLASH)* 2>nul || exit 0
 	$(TOUCH) $(OBJDIR)$(SLASH).gitkeep
 	$(TOUCH) $(BINDIR)$(SLASH).gitkeep
 endif

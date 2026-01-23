@@ -8,20 +8,20 @@ Comparing several algorithms for sampling from a normal distribution. Includes a
 ```
    ALGORITHM     TIME:NS          MEAN      STDDEV    SKEWNESS    KURTOSIS
    -----------------------------------------------------------------------
-   rejection        1014     -0.000447    0.993344   -0.001100    2.918933
- unwrap-unif         761      0.000567    0.998294    0.001364    2.999860
-  irwin-hall         740      0.000954    0.998562    0.000663    2.903222
-   irwin-int         603      0.000574    0.999528   -0.000935    2.905955
-  box-muller         220     -0.000809    0.998673   -0.001221    3.002985
-   marsaglia         204     -0.000380    0.999416   -0.002142    3.004900
-bhask-muller         192      0.000684    0.998433    0.000628    3.002840
-    prob-int         139     -0.000012    0.998090   -0.000055    2.996614
-  rademacher          86      0.000220    0.999000    0.001072    2.839457
-      lookup          63      0.000075    0.997472   -0.002438    2.992218
- coarse-mean          63     -0.000750    0.998384    0.000445    2.965112
+   rejection      145.54      0.000620    0.993583    0.000510    2.909401
+ unwrap-unif      108.68      0.000014    0.999773   -0.002000    2.994228
+  box-muller       27.22      0.000034    0.999922    0.000188    2.997706
+bhask-muller       18.07      0.000034    0.999304    0.000192    2.996976
+   marsaglia       16.24     -0.000043    0.999944   -0.000461    3.002210
+  irwin-hall       13.25     -0.000001    1.000737   -0.004243    2.899020
+   irwin-int       12.60     -0.000182    1.000737   -0.004244    2.899011
+    prob-int       11.44      0.000002    0.999716   -0.000006    2.991722
+  rademacher        4.61      0.000001    0.999729   -0.000001    2.832470
+      lookup        2.47      0.000000    0.999718   -0.000001    2.991724
+ coarse-mean        1.46     -0.000000    0.999980    0.000005    2.962430
    _______________________________________________________________________
-   (UNIFORM)          56      0.500078    0.288495   -0.001095    1.800345
-IDEAL NORMAL          -       0.0         1.0         0.0         3.0
+   (UNIFORM)        1.28      0.499984    0.288675    0.000001    1.800000
+IDEAL NORMAL          -       0.0         1.0         0.0         3.0     
 ```
 
 ## About the Algorithms
@@ -150,8 +150,9 @@ Precompute some samples from a standard normal distribution to generate a few sh
   - [x] Pure lookup table with `RAND_MAX` entries
   - [x] Weighted sum of Rademacher distribution trials
   - [x] Mean of approximate normals
+  - [ ] Ziggurat algorithm
 - [x] More rigorous statistical testing of results
-- [ ] Use a random number generator better than rand()
+- [x] Use a random number generator better than rand()
 - [ ] Probit function improvements
   - [x] Implement PPND7 for improved probit approximation
   - [ ] Implement PPND16 for even better approximation

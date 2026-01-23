@@ -2,53 +2,49 @@
 #include "stats.h"
 
 float get_mean(float* arr, int N) {
-    float sum = 0.0;
-    int i;
-    for (i = 0; i < N; i++) {
+    double sum = 0.0;
+    for (int i = 0; i < N; i++) {
         sum += arr[i];
     }
-    return sum / ((float) N);
-}
-
-float get_stdev(float* arr, int N) {
-    return sqrt(get_variance(arr, N));
+    return (float)(sum / (double)N);
 }
 
 float get_variance(float* arr, int N) {
-    float mean = get_mean(arr, N);
-    int i;
-    float sumsq = 0.0;
-    float dev;
-    for (i = 0; i < N; i++) {
-        dev = mean - arr[i];
-        sumsq += dev*dev;
+    double mean = get_mean(arr, N);
+    double sumsq = 0.0;
+    for (int i = 0; i < N; i++) {
+        double dev = arr[i] - mean;
+        sumsq += dev * dev;
     }
-    return sumsq / ((float) N);
+    return (float)(sumsq / (double)N);
+}
+
+float get_stdev(float* arr, int N) {
+    return sqrtf(get_variance(arr, N));
 }
 
 float get_skewness(float* arr, int N) {
-    float mean = get_mean(arr, N);
-    float variance = get_variance(arr, N);
-    int i;
-    float sumcubes = 0.0;
-    float dev;
-    for (i = 0; i < N; i++) {
-        dev = arr[i] - mean;
-        sumcubes += dev*dev*dev;
+    double mean = get_mean(arr, N);
+    double variance = get_variance(arr, N);
+    double sumcubes = 0.0;
+    for (int i = 0; i < N; i++) {
+        double dev = arr[i] - mean;
+        sumcubes += dev * dev * dev;
     }
-    return (sumcubes / ((float) N)) / pow(variance, 3./2.);
+    return (float)((sumcubes / (double)N) / pow(variance, 1.5));
 }
 
+
 float get_kurtosis(float* arr, int N) {
-    float mean = get_mean(arr, N);
-    float variance = get_variance(arr, N);
-    int i;
-    float sumfourths = 0.0;
-    float dev, devsq;
-    for (i = 0; i < N; i++) {
-        dev = arr[i] - mean;
-        devsq = dev * dev;
-        sumfourths += devsq*devsq;
+    double mean = get_mean(arr, N);
+    double variance = get_variance(arr, N);
+
+    double sumfourths = 0.0;
+    for (int i = 0; i < N; i++) {
+        double dev = arr[i] - mean;
+        double dev2 = dev * dev;
+        sumfourths += dev2 * dev2;
     }
-    return (sumfourths / ((float) N)) / (variance*variance);
+
+    return (float)((sumfourths / (double)N) / (variance * variance));
 }

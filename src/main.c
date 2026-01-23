@@ -9,7 +9,7 @@
 #include "probit.h"
 #include "fasttrig.h"
 
-#define NUM_VALS (RAND_MAX*100)
+#define NUM_VALS (URAND_MAX*1000)
 
 void test_alg(void* args) {
     AlgArgs* A = (AlgArgs*) args;
@@ -36,7 +36,7 @@ int get_method_summary(AlgID id, int N) {
     skew = get_skewness(A.arr, N);
     kurt = get_kurtosis(A.arr, N);
 
-    printf("%12s       %5.f    % 10.6f  % 10.6f  % 10.6f  % 10.6f\n", alg_names_short[id], t/(NUM_VALS)*1e9, mean, stdev, skew, kurt);
+    printf("%12s      %6.2f    % 10.6f  % 10.6f  % 10.6f  % 10.6f\n", alg_names_short[id], t/(NUM_VALS)*1e9, mean, stdev, skew, kurt);
 
     free(vals);
     return 0;
