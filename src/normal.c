@@ -256,25 +256,21 @@ int normal_rademacher(float* arr, int N) {
 }
 
 int normal_coarse_mean(float* arr, int N) {
-    static const int16_t prob0[16] = {-9555, -5842, -3891, -2666, -1954, -1112, -713, 370, -265, 339, 1480, 2780, 2508, 3849, 6098, 8303};
-    static const int16_t prob1[16] = {-8339, -5311, -4676, -2430, -1969, -1431, -101, -284, -225, 968, 1615, 2042, 2668, 4516, 6143, 9003};
-    static const int16_t prob2[16] = {-8303, -5924, -3739, -2536, -2945, -1728, -1137, -1282, 339, 1408, 1334, 1334, 3020, 3988, 4477, 8564};
-    static const int16_t prob3[8]  = {-6486, -3190, -1834, -801, 1022, 2116, 2882, 6897};
-
-    int i;
-    int x;
-    unsigned int r;
-
+    static const int16_t prob0[8] = {14057, -4483, -1017, -3459, 3722, -17266, 9842, -1508};
+    static const int16_t prob1[8] = {2529, -134, 12767, -17629, -573, -420, 9000, -4936};
+    static const int16_t prob2[8] = {161, -6111, 1506, 4031, -9372, 8232, 5032, 7067};
+    static const int16_t prob3[8] = {6952, -4397, 234, -7142, -1974, 4825, -4067, -4181};
+    static const int16_t prob4[8]  = {-4936, -4925, -2789, -2348, -9013, 583, 17795, 4346};
+    uint32_t i, x;
+    uint16_t r;
     for (i = 0; i < N; i++) {
         r = urand();
-        x  =  prob0[r&15]; r >>= 4;
-        x +=  prob1[r&15]; r >>= 4;
-        x +=  prob2[r&15]; r >>= 4;
-        x +=  prob3[r&7]; // only 3 of 4 bits are used here, due to rand() limits
-
-        arr[i] = (float) x / (float) (8192.f);
+        x  =  prob0[r&7]; r >>= 3;
+        x +=  prob1[r&7]; r >>= 3;
+        x +=  prob2[r&7]; r >>= 3;
+        x +=  prob3[r&7]; r >>= 3;
+        x +=  prob4[r&7];
+        arr[i] = (float) x * (1.0f / 16384.0f);
     }
     return 0;
-
-
 }

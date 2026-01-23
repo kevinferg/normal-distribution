@@ -8,20 +8,41 @@ Comparing several algorithms for sampling from a normal distribution. Includes a
 ```
    ALGORITHM     TIME:NS          MEAN      STDDEV    SKEWNESS    KURTOSIS
    -----------------------------------------------------------------------
-   rejection      148.17      0.000620    0.993583    0.000510    2.909401
- unwrap-unif      110.32      0.000014    0.999773   -0.002000    2.994228
-  box-muller       26.83      0.000034    0.999922    0.000188    2.997706
-bhask-muller       18.22      0.000034    0.999304    0.000192    2.996976
-   marsaglia       15.78     -0.000043    0.999944   -0.000461    3.002210
-  irwin-hall       13.92     -0.000001    1.000737   -0.004243    2.899020
-   irwin-int       12.39     -0.000182    1.000737   -0.004244    2.899011
-    prob-int        8.09      0.000002    0.999716   -0.000006    2.991722
-  rademacher        4.33      0.000001    0.999729   -0.000001    2.832470
-      lookup        2.53      0.000000    0.999718   -0.000001    2.991724
- coarse-mean        1.56     -0.000000    0.999980    0.000005    2.962430
+   rejection      147.04      0.000620    0.993583    0.000510    2.909401
+ unwrap-unif      109.87      0.000014    0.999773   -0.002000    2.994228
+  box-muller       27.44      0.000034    0.999922    0.000188    2.997706
+bhask-muller       17.73      0.000034    0.999304    0.000192    2.996976
+   marsaglia       15.93     -0.000043    0.999944   -0.000461    3.002210
+  irwin-hall       13.43     -0.000001    1.000737   -0.004243    2.899020
+   irwin-int       12.24     -0.000182    1.000737   -0.004244    2.899011
+    prob-int        8.03      0.000002    0.999716   -0.000006    2.991722
+  rademacher        4.18      0.000001    0.999729   -0.000001    2.832470
+      lookup        2.44      0.000000    0.999718   -0.000001    2.991724
+ coarse-mean        1.68      0.000008    1.000012    0.000013    3.000079
    _______________________________________________________________________
-   (UNIFORM)        1.53      0.499984    0.288675    0.000001    1.800000
-IDEAL NORMAL          -       0.0         1.0         0.0         3.0     
+   (UNIFORM)        1.22      0.499984    0.288675    0.000001    1.800000
+IDEAL NORMAL          -       0.0         1.0         0.0         3.0
+```
+
+The following algorithm had the fastest performance and maintained good statistics:
+```c
+// Generate a random number from a normal 
+// distribution with mean=0 and variance=1
+float frandn(void) {
+    static const int16_t prob[5][8] = {
+        {14057, -4483, -1017, -3459, 3722, -17266, 9842, -1508},
+        {2529, -134, 12767, -17629, -573, -420, 9000, -4936},
+        {161, -6111, 1506, 4031, -9372, 8232, 5032, 7067},
+        {6952, -4397, 234, -7142, -1974, 4825, -4067, -4181},
+        {-4936, -4925, -2789, -2348, -9013, 583, 17795, 4346}};
+    uint16_t r = urand(); // 15 random bits
+    int32_t  x = prob[0][r&7]; r >>= 3;
+    x += prob[1][r&7]; r >>= 3;
+    x += prob[2][r&7]; r >>= 3;
+    x += prob[3][r&7]; r >>= 3;
+    x += prob[4][r&7];
+    return (float) x * (1.0f / 16384.0f);
+}
 ```
 
 ## About the Algorithms
@@ -138,6 +159,9 @@ Precompute some samples from a standard normal distribution to generate a few sh
 2. Separate into separate 3-4 bit ints: {3, 4, 4, 4}
 3. For each, lookup a normal sample from table with {8, 16, 16, 16} samples each
 4. Add together. Return the appropriately scaled result.
+
+
+Update -- Now I use five 3-bit numbers (requires a table of 40 pre-generated numbers rather than 56). 
 
 ---
 
