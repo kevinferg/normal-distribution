@@ -178,9 +178,10 @@ Update -- Now I use five 3-bit numbers (requires a table of 40 pre-generated num
   - [ ] Ziggurat algorithm
 - [x] More rigorous statistical testing of results
 - [x] Use a random number generator better than rand()
-- [ ] Probit function improvements
+- [x] Probit function improvements
+  - [x] Multiple approximation options
   - [x] Implement PPND7 for improved probit approximation
-  - [ ] Implement PPND16 for even better approximation
+  - [x] Implement PPND16 for even better approximation
 
 ## Compilation and Usage
 - Windows:
