@@ -255,22 +255,28 @@ int normal_rademacher(float* arr, int N) {
     return 0;
 }
 
+static inline float frandn(void) {
+    static const int16_t samples[5][8] = {
+        {-18666, 1465,  9124, -2456,  7113,   2465,  2440,  -4190},
+        { -1690, 1656, -6392,  3616, -7014,   8614,  5799,  -1058},
+        { -3021, 4302, -3768, -7831, 11343,  13204, -1676,  -5054},
+        {  1012, 6001,  5497, 14892,   487,    967,   -39, -13798},
+        { -7858, 3286,  1206, -5579, 14569, -11125, -9127,  -8716}
+    }; // ^ Fine-tuned samples from ~N(mu=0, sig=2^14/sqrt(5))
+    uint16_t r = urand();           // 15 random bits
+    int32_t x;                      // Add 1 entry from each row
+    x  = samples[0][r&7];  r >>= 3;
+    x += samples[1][r&7];  r >>= 3;
+    x += samples[2][r&7];  r >>= 3;
+    x += samples[3][r&7];  r >>= 3;
+    x += samples[4][r&7];           // Now, x~N(mu=0, sig=2^14)
+    return (float) x * (1.0f / 16384.0f);
+}
+
 int normal_coarse_mean(float* arr, int N) {
-    static const int16_t prob0[8] = {14057, -4483, -1017, -3459, 3722, -17266, 9842, -1508};
-    static const int16_t prob1[8] = {2529, -134, 12767, -17629, -573, -420, 9000, -4936};
-    static const int16_t prob2[8] = {161, -6111, 1506, 4031, -9372, 8232, 5032, 7067};
-    static const int16_t prob3[8] = {6952, -4397, 234, -7142, -1974, 4825, -4067, -4181};
-    static const int16_t prob4[8]  = {-4936, -4925, -2789, -2348, -9013, 583, 17795, 4346};
-    uint32_t i, x;
-    uint16_t r;
+    uint32_t i;
     for (i = 0; i < N; i++) {
-        r = urand();
-        x  =  prob0[r&7]; r >>= 3;
-        x +=  prob1[r&7]; r >>= 3;
-        x +=  prob2[r&7]; r >>= 3;
-        x +=  prob3[r&7]; r >>= 3;
-        x +=  prob4[r&7];
-        arr[i] = (float) x * (1.0f / 16384.0f);
+        arr[i] = frandn();
     }
     return 0;
 }
