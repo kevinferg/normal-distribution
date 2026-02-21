@@ -1,24 +1,24 @@
 # Sampling from a standard normal distribution
 
 ## Description
-Comparing several algorithms for sampling from a normal distribution. Includes an implementation of PPND7 to compute the probit function.
+Comparing several algorithms for sampling from a normal distribution. Includes single- and double-precision implementations of the probit function.
 
 ## Results
 
 ```
    ALGORITHM     TIME:NS          MEAN      STDDEV    SKEWNESS    KURTOSIS
    -----------------------------------------------------------------------
-   rejection      147.71      0.000620    0.993583    0.000510    2.909401
- unwrap-unif      107.85      0.000014    0.999773   -0.002000    2.994228
-  box-muller       27.56      0.000034    0.999922    0.000188    2.997706
-bhask-muller       17.94      0.000034    0.999304    0.000192    2.996976
+   rejection      146.86      0.000620    0.993583    0.000510    2.909401
+ unwrap-unif      103.43      0.000014    0.999773   -0.002000    2.994228
+  box-muller       27.22      0.000034    0.999922    0.000188    2.997706
+bhask-muller       17.61      0.000034    0.999304    0.000192    2.996976
    marsaglia       15.99     -0.000043    0.999944   -0.000461    3.002210
-  irwin-hall       13.89     -0.000001    1.000737   -0.004243    2.899020
-   irwin-int       11.75     -0.000182    1.000737   -0.004244    2.899011
-    prob-int        8.67      0.000002    0.999716   -0.000006    2.991722
-  rademacher        4.49      0.000001    0.999729   -0.000001    2.832470
-      lookup        2.41      0.000000    0.999718   -0.000001    2.991724
- coarse-mean        1.50      0.000000    0.999981    0.000003    2.999990
+  irwin-hall       10.83     -0.000001    1.000737   -0.004243    2.899020
+   irwin-int       10.35     -0.000182    1.000737   -0.004244    2.899011
+    prob-int        7.97      0.000002    0.999716   -0.000006    2.991722
+  rademacher        4.24      0.000001    0.999729   -0.000001    2.832470
+      lookup        2.26      0.000000    0.999718   -0.000001    2.991724
+ coarse-mean        1.83      0.000000    0.999981    0.000003    2.999990
    _______________________________________________________________________
    (UNIFORM)        1.31      0.499984    0.288675    0.000001    1.800000
 IDEAL NORMAL          -       0.0         1.0         0.0         3.0     

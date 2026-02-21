@@ -2,10 +2,10 @@
 #define UNIFORM_H
 
 #define URAND_MAX 0x7fff
-static uint16_t rng_state = 1;
+static uint32_t rng_state = 1;
 
 // Set RNG seed
-static inline void useed(uint16_t seed) {
+static inline void useed(uint32_t seed) {
     rng_state = seed;
     return;
 }
@@ -13,7 +13,7 @@ static inline void useed(uint16_t seed) {
 // Sample a random 16-bit integer, URAND_MAX or lower
 static inline uint16_t urand(void) {
     rng_state = rng_state * 1103515245 + 12345;
-    return rng_state >> 1;  // return 15-bit result
+    return ((uint16_t) rng_state) >> 1;  // return 15-bit result
 }
 
 // Sample uniformly on [0,1)

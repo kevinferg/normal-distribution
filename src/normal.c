@@ -196,61 +196,51 @@ int normal_lookup(float* arr, int N) {
     return 0;
 }
 
+static inline float frandn_rademacher(void) {
+    static const int16_t w[15] = {
+        24136, 22726, 21400, 20150, 18972,
+        17864, 16822, 15838, 14914, 14042,
+        13222, 12450, 11724, 11038, 10394
+    };
+    uint16_t r = urand();
+    int32_t x = -122846; // -sum(w)/2
+    for (int i = 0; i < 15; i++) {
+        x += (-(int32_t)((r >> i) & 1)) & w[i];
+    } // Ideally the compiler will unroll this.
+    return ((float) x) * (1.0f / 32768.0f);
+}
 
 
 
 int normal_rademacher(float* arr, int N) {
+/*
+Method:
 
-    /*
-    Method:
+w = sqrt((1-a^2)/(1-a^(2n))) = M(1-a)/(1-a^n)
 
-    w = sqrt((1-a^2)/(1-a^(2n))) = M(1-a)/(1-a^n)
-    
-    n = 15 // number of bit trials
-    M = 3.75 // max value possible
-    --> w = .456352;
-    --> a = .893825;
+n = 15 // number of bit trials
+M = 3.75 // max value possible
+--> w = .456352;
+--> a = .893825;
 
-    w_i = w * a^i
-    x = 50% w_i, 50% -w_i
+w_i = w * a^i
+x = 50% w_i, 50% -w_i
 
-    // Equivalent algorithm with floats:
-    // float w = .3683;
-    // float a = .9416;
-    // float x = 0;
-    // for (int j = 0; j < 15; j++) {
-    //     x += (r&1)? w: -w; 
-    //     r >>= 1;
-    //     w *= a;
-    // }
-    // arr[i] = x;
-    
-    */
-    int i;
-    int x;
-    unsigned int r;
+// Equivalent algorithm with floats:
+// float w = .3683;
+// float a = .9416;
+// float x = 0;
+// for (int j = 0; j < 15; j++) {
+//     x += (r&1)? w: -w; 
+//     r >>= 1;
+//     w *= a;
+// }
+// arr[i] = x;
 
+*/
+    uint32_t i;
     for (i = 0; i < N; i++) {
-        r = urand();
-        x = -122846;
-        x += (r&1) *  24136; r >>= 1;
-        x += (r&1) *  22726; r >>= 1;
-        x += (r&1) *  21400; r >>= 1;
-        x += (r&1) *  20150; r >>= 1;
-        x += (r&1) *  18972; r >>= 1;
-        x += (r&1) *  17864; r >>= 1;
-        x += (r&1) *  16822; r >>= 1;
-        x += (r&1) *  15838; r >>= 1;
-        x += (r&1) *  14914; r >>= 1;
-        x += (r&1) *  14042; r >>= 1;
-        x += (r&1) *  13222; r >>= 1;
-        x += (r&1) *  12450; r >>= 1;
-        x += (r&1) *  11724; r >>= 1;
-        x += (r&1) *  11038; r >>= 1;
-        x += (r&1) *  10394;
-
-        arr[i] = ((float) x / (float) 32768); 
-
+        arr[i] = frandn_rademacher();
     }
     return 0;
 }

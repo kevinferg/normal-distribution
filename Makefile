@@ -29,7 +29,7 @@ CC = gcc
 
 INC_LOCATIONS = $(shell find "$(INCDIR)" "$(SRCDIR)" -type d)
 INC_FLAGS     = $(addprefix -I,$(INC_LOCATIONS))
-CFLAGS = $(INC_FLAGS) -std=c99 -O2 -MMD -MP
+CFLAGS = $(INC_FLAGS) -std=c99 -O3 -MMD -MP
 
 # Recursive source file discovery
 srcs      = $(shell find "$(SRCDIR)" -name "*.c")
