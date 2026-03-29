@@ -8,18 +8,19 @@ Comparing several algorithms for sampling from a normal distribution. Includes s
 ```
    ALGORITHM     TIME:NS   RNG_PER         MEAN      STDDEV    SKEWNESS    KURTOSIS  
    ----------------------------------------------------------------------------------
-   rejection      113.50     5.325    -0.000076    0.994930   -0.000324    2.915404
-   boxmuller       37.69         1    -0.000168    0.999863   -0.000622    2.998783
- bhaskmuller       23.96         1     0.000267    0.999428    0.000422    2.996896
-   marsaglia       16.45     1.273    -0.000280    0.999822    0.000080    2.999282
-   irwinhall       13.61        12    -0.000085    0.999954    0.000098    2.900015
-  intwinhall       13.03        12    -0.000809    1.000123   -0.000340    2.900072
-      probit        9.89         1    -0.000474    0.999751    0.000015    2.992290
-  rademacher        4.36         1     0.000124    0.999750   -0.000207    2.832651
-  coarsemean        2.35         1    -0.000020    1.000014   -0.000496    2.999222
-      lookup        1.83         1     0.000093    0.999596    0.000379    2.991496
+   rejection      112.95     5.323    -0.000137    0.994903   -0.000334    2.914604
+   boxmuller       38.67         1     0.000173    0.999770   -0.000217    2.999415
+ bhaskmuller       24.66         1     0.000057    0.999556    0.000558    2.997025
+   marsaglia       19.44     1.273    -0.000252    0.999971   -0.000168    2.999838
+   irwinhall       13.79        12     0.000097    1.000006   -0.000251    2.899888
+  intwinhall       12.91        12    -0.000809    1.000177   -0.000087    2.900898
+      ratio2       12.73     2.737     0.000240    0.999950    0.000035    2.999418
+      probit       10.10         1    -0.000474    0.999744    0.000073    2.992119
+  rademacher        4.61         1     0.000127    0.999748   -0.000207    2.832666
+      lookup        1.98         1     0.000095    0.999596    0.000377    2.991479
+  coarsemean        1.95         1    -0.000021    1.000013   -0.000493    2.999223
    __________________________________________________________________________________
-   (UNIFORM)        1.56         1     0.500030    0.288682   -0.000100    1.800021
+   (UNIFORM)        1.56         1     0.500045    0.288661   -0.000117    1.800078
 IDEAL NORMAL          -          -     0.0         1.0         0.0         3.0
 ```
 
@@ -173,7 +174,7 @@ Also, the unused bits can be used to index into a smaller row if desired.
   - [x] Mean of approximate normals
   - [ ] GRAND [(Brent 1973)](https://dl.acm.org/doi/pdf/10.1145/361604.361629)
   - [ ] Ratio method [(Kinderman and Monahan 1977)](https://dl.acm.org/doi/pdf/10.1145/355744.355750)
-  - [ ] Improved ratio method [(Leva 1992)](https://dl.acm.org/doi/pdf/10.1145/138351.138364)
+  - [x] Improved ratio method [(Leva 1992)](https://dl.acm.org/doi/pdf/10.1145/138351.138364)
   - [ ] Direct method [(Wallace 1996)](https://dl.acm.org/doi/pdf/10.1145/225545.225554)
   - [ ] Ziggurat algorithm
 - [x] More rigorous statistical testing of results
