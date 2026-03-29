@@ -22,6 +22,7 @@ ALGORITHM_LIST(
     ADD_ALG(rademacher)
 
     // ratio.c
+    ADD_ALG(ratio)
     ADD_ALG(ratio2)
 
     // rejection.c
