@@ -12,8 +12,8 @@ float frandn_marsaglia(void) {
     }
     float U, V, C, S;
     do {
-        U = frand()*2.0f - 1.0f;
-        V = frand()*2.0f - 1.0f;
+        U = frand_open()*2.0f - 1.0f;
+        V = frand_open()*2.0f - 1.0f;
         S = U*U + V*V;
     } while (S == 0.0f || S >= 1.0f);
     C = sqrtf(-2.0f*logf(S)/S);

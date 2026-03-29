@@ -8,7 +8,7 @@ float frandn_irwinhall(void) {
     int i;
     float sum = -IH_HALF;
     for (i = 0; i < IH_TOTAL; i++) {
-        sum += frand();
+        sum += frand_open();
     }
     return sum;
 }

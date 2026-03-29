@@ -16,9 +16,14 @@ static inline uint16_t rand15(void) {
     return (rng_seed >> 17);  // return 15-bit result
 }
 
-// Generate a uniform random float on the interval [0.0, 1.0)
+// Generate a uniform random float on the SEMI-OPEN interval [0.0, 1.0)
 static inline float frand(void) {
     return (float) rand15() / (float) ((uint32_t) RNG_MAX+1);
+}
+
+// Generate a uniform random float on the OPEN interval (0.0, 1.0)
+static inline float frand_open(void) {
+    return (float) ((uint32_t) rand15() + 1) / (float) ((uint32_t) RNG_MAX + 2);
 }
 
 

@@ -3,7 +3,7 @@
 
 float frandn_probit(void) {
     float r;
-    do {r = frand();} while (r == 0.0f);
+    r = frand_open();
     return probitf(r);
 }
 

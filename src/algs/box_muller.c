@@ -12,8 +12,8 @@ float frandn_boxmuller(void) {
         return stored;
     }
     float U, V, C;
-    do {U = frand();} while (U == 0.0f);
-    V = frand();
+    U = frand_open();
+    V = frand_open();
     C = sqrtf(-2.0f*logf(U));
     has_stored = 1;
     stored = C * cosf(2.0f*(float)M_PI * V);
@@ -29,8 +29,8 @@ float frandn_bhaskmuller(void) {
         return stored;
     }
     float U, V, C;
-    do {U = frand();} while (U == 0.0f);
-    V = frand();
+    U = frand_open();
+    V = frand_open();
     C = sqrtf(-2.0f*logf(U));
     has_stored = 1;
     stored = C * fastcos(2.0f*(float)M_PI * V);
