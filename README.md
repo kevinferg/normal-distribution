@@ -145,11 +145,20 @@ Precompute some samples from a standard normal distribution to generate a few sh
 
 1. Generate a random 15-bit number
 2. Separate into separate five 3-bit ints
-3. For each, lookup a normal sample from table with 8 samples per row
+3. For each, look up a normal sample from table with 8 samples per row
 4. Add together. Return the appropriately scaled result.
 
+Scaling recommendations:
 
-Update -- Now I use five 3-bit numbers (requires a table of 40 pre-generated numbers rather than 56). 
+| rng bits | table size | total entries |
+| --- | --- | --- |
+| 7 | 3 rows of 2^2 | 12 (1 unused bit) |
+| 15 | 5 rows of 2^3 | 40 (0 unused bits) |
+| 31 | 7 rows of 2^4 | 112 (3 unused bits) |
+| 63 | 12 rows of 2^5 | 384 (3 unused bits) |
+
+Note that int width should also change (e.g. `uint8_t` for 7-bit vs. `uint16_t` for 15-bit).
+Also, the unused bits can be used to index into a smaller row if desired.
 
 ---
 
