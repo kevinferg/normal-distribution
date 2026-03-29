@@ -1,0 +1,26 @@
+ALGORITHM_LIST(
+
+    // box_muller.c
+    ADD_ALG(boxmuller)
+    ADD_ALG(bhaskmuller)
+
+    // coarse_mean.c
+    ADD_ALG(coarsemean)
+
+    // inverse_transform.c
+    ADD_ALG(probit)
+    ADD_ALG(lookup)
+
+    // irwin_hall.c
+    ADD_ALG(irwinhall)
+    ADD_ALG(intwinhall)
+
+    // marsaglia_polar.c
+    ADD_ALG(marsaglia)
+
+    // rademacher_sum.c
+    ADD_ALG(rademacher)
+
+    // rejection.c
+    ADD_ALG(rejection)
+)

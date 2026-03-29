@@ -1,6 +1,4 @@
-#pragma once
-
-#include "uniform.h"
+#include "utils/uniform.h"
 
 #define IH_TOTAL (12)
 #define IH_HALF (IH_TOTAL/2)

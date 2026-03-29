@@ -1,7 +1,5 @@
-#pragma once
-
 #include <stdint.h>
-#include "uniform.h"
+#include "utils/uniform.h"
 
 float frandn_rademacher(void) {
     static const int16_t w[15] = {

@@ -1,6 +1,4 @@
-#pragma once
-
-#include "uniform.h"
+#include "utils/uniform.h"
 #include "utils/probit.h"
 
 float frandn_probit(void) {

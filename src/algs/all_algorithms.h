@@ -1,7 +1,0 @@
-#include "box_muller.h"
-#include "coarse_mean.h"
-#include "inverse_transform.h"
-#include "irwin_hall.h"
-#include "marsaglia_polar.h"
-#include "rademacher_sum.h"
-#include "rejection.h"

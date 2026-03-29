@@ -6,22 +6,21 @@ Comparing several algorithms for sampling from a normal distribution. Includes s
 ## Results
 
 ```
-   ALGORITHM     TIME:NS          MEAN      STDDEV    SKEWNESS    KURTOSIS
-   -----------------------------------------------------------------------
-   rejection      146.86      0.000620    0.993583    0.000510    2.909401
- unwrap-unif      103.43      0.000014    0.999773   -0.002000    2.994228
-  box-muller       27.22      0.000034    0.999922    0.000188    2.997706
-bhask-muller       17.61      0.000034    0.999304    0.000192    2.996976
-   marsaglia       15.99     -0.000043    0.999944   -0.000461    3.002210
-  irwin-hall       10.83     -0.000001    1.000737   -0.004243    2.899020
-   irwin-int       10.35     -0.000182    1.000737   -0.004244    2.899011
-    prob-int        7.97      0.000002    0.999716   -0.000006    2.991722
-  rademacher        4.24      0.000001    0.999729   -0.000001    2.832470
-      lookup        2.26      0.000000    0.999718   -0.000001    2.991724
- coarse-mean        1.83      0.000000    0.999981    0.000003    2.999990
-   _______________________________________________________________________
-   (UNIFORM)        1.31      0.499984    0.288675    0.000001    1.800000
-IDEAL NORMAL          -       0.0         1.0         0.0         3.0     
+   ALGORITHM     TIME:NS   RNG_PER         MEAN      STDDEV    SKEWNESS    KURTOSIS  
+   ----------------------------------------------------------------------------------
+   rejection      113.50     5.325    -0.000076    0.994930   -0.000324    2.915404
+   boxmuller       37.69         1    -0.000168    0.999863   -0.000622    2.998783
+ bhaskmuller       23.96         1     0.000267    0.999428    0.000422    2.996896
+   marsaglia       16.45     1.273    -0.000280    0.999822    0.000080    2.999282
+   irwinhall       13.61        12    -0.000085    0.999954    0.000098    2.900015
+  intwinhall       13.03        12    -0.000809    1.000123   -0.000340    2.900072
+      probit        9.89         1    -0.000474    0.999751    0.000015    2.992290
+  rademacher        4.36         1     0.000124    0.999750   -0.000207    2.832651
+  coarsemean        2.35         1    -0.000020    1.000014   -0.000496    2.999222
+      lookup        1.83         1     0.000093    0.999596    0.000379    2.991496
+   __________________________________________________________________________________
+   (UNIFORM)        1.56         1     0.500030    0.288682   -0.000100    1.800021
+IDEAL NORMAL          -          -     0.0         1.0         0.0         3.0
 ```
 
 The following algorithm had the fastest performance and maintained good statistics:
@@ -35,7 +34,7 @@ static inline float frandn(void) {
         {  1012, 6001,  5497, 14892,   487,    967,   -39, -13798},
         { -7858, 3286,  1206, -5579, 14569, -11125, -9127,  -8716}
     }; // ^ Fine-tuned samples from ~N(mu=0, sig=2^14/sqrt(5))
-    uint16_t r = urand();           // 15 random bits
+    uint16_t r = rand15();          // 15 random bits
     int32_t x;                      // Add 1 entry from each row
     x  = samples[0][r&7];  r >>= 3;
     x += samples[1][r&7];  r >>= 3;
@@ -59,22 +58,10 @@ static inline float frandn(void) {
 - Can be thought of as throwing a dart randomly at a rectangular dart board and only accepting darts that land below the standard normal curve. The x-coordinate of the dart is the returned sample.
 - More info: [Wikipedia](https://en.wikipedia.org/wiki/Rejection_sampling)
 
----
-
-### `unwrap-unif`: 'Unwrapped' uniform distribution
-
-Taking a standard normally distributed random variable Z~N(0,1) and wrapping it onto [0,1),  `Z - floor(Z)`, results in a *very* nearly uniform distribution. (Note: a 12-Irwin-Hall distribution gives exact uniformity.) This algorithm starts with a uniform variable and undoes that wrapping.
-
-1. Start with the wrapped location by sampling a float X~U[0,1)
-2. Determine which unit bin it started from by:
-   - Sample a random float r on [0,1)
-   - Evaluate the pdf at X, then X-1, then X+1, X-2, X+2, etc.
-   - When the cumulative pdf exceeds r, you've found the correct bin n
-3. Return X + n
 
 ---
 
-### `irwin-hall`: Sampling from an Irwin-Hall distribution
+### `irwinhall`: Sampling from an Irwin-Hall distribution
 
 1. Generate 12 random floating point numbers, each on [0,1)
 2. Add the numbers
@@ -86,7 +73,7 @@ Taking a standard normally distributed random variable Z~N(0,1) and wrapping it 
 
 ---
 
-### `box-muller`: Box-Muller Method
+### `boxmuller`: Box-Muller Method
 
 This method is based on the fact that 2 independent standard normal random variables `X` and `Y` can be viewed as a vector `[X, Y]` -- This vector has a uniformly random angle `V` on `[0,2*PI)`. Also, the magnitude `C = sqrt(X*X+Y*Y)`, can be transformed into a uniform `[0,1)` random variable as well: `U = exp((-1/2)*C^2)`. The algorithm starts with `U` and `V` and works backwards to compute a corresponding pair `X` and `Y`.  
 
@@ -94,7 +81,7 @@ This method is based on the fact that 2 independent standard normal random varia
 2. Compute C as `sqrt(-2*log(U))`
 3. Return `X = C*cos(2*PI*V)`, and next return `Y = C*sin(2*PI*V)`
 
-`bhask-muller` uses the much faster Bhaskara I's sine/cosine approximation instead of the built-in sin/cos functions. Accuracy is lower, but this is hardly noticeable, as we are trying to draw random-looking values.
+`bhaskmuller` uses the much faster Bhaskara I's sine/cosine approximation instead of the built-in sin/cos functions. Accuracy is lower, but this is hardly noticeable, as we are trying to draw random-looking values.
 
 - [Box-Muller Transform](https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform)
 - [Bhaskara I's Formula](https://en.wikipedia.org/wiki/Bh%C4%81skara_I%27s_sine_approximation_formula)
@@ -114,7 +101,7 @@ This algorithm is a slight modification of Box-Muller to avoid using sine/cosine
 
 ---
 
-### `prob-int`: Probability integral transform a.k.a. Inverse transform sampling
+### `probit`: Probability integral transform a.k.a. Inverse transform sampling
 
 If the CDF of a 1-D distribution is known, a uniform random sample can be transformed into a sample of the target distribution by inverting the CDF. That is, you uniformly randomly sample a percentile, and then return the value corresponding to that percentile.
 
@@ -152,13 +139,13 @@ If you have 131kB memory to spare, precompute probit results for a range of floa
 
 ---
 
-### `coarse-mean`: Mean of 4 coarse normal samples
+### `coarsemean`: Mean of coarse normal samples
 
-Precompute some samples from a standard normal distribution to generate a few short lookup tables. By averaging a few results and scaling them properly, by the central limit theorem the result will be close to normal. Quality of results will depend on the quality of the pregenerated samples. I use 4-bit sections of a rand() call as indices into each table.
+Precompute some samples from a standard normal distribution to generate a few short lookup tables. By averaging a few results and scaling them properly, by the central limit theorem the result will be close to normal. Quality of results will depend on the quality of the pregenerated samples. I use 3-bit sections of a rand() call as indices into each table.
 
 1. Generate a random 15-bit number
-2. Separate into separate 3-4 bit ints: {3, 4, 4, 4}
-3. For each, lookup a normal sample from table with {8, 16, 16, 16} samples each
+2. Separate into separate five 3-bit ints
+3. For each, lookup a normal sample from table with 8 samples per row
 4. Add together. Return the appropriately scaled result.
 
 
@@ -175,6 +162,10 @@ Update -- Now I use five 3-bit numbers (requires a table of 40 pre-generated num
   - [x] Pure lookup table with `RAND_MAX` entries
   - [x] Weighted sum of Rademacher distribution trials
   - [x] Mean of approximate normals
+  - [ ] GRAND [(Brent 1973)](https://dl.acm.org/doi/pdf/10.1145/361604.361629)
+  - [ ] Ratio method [(Kinderman and Monahan 1977)](https://dl.acm.org/doi/pdf/10.1145/355744.355750)
+  - [ ] Improved ratio method [(Leva 1992)](https://dl.acm.org/doi/pdf/10.1145/138351.138364)
+  - [ ] Direct method [(Wallace 1996)](https://dl.acm.org/doi/pdf/10.1145/225545.225554)
   - [ ] Ziggurat algorithm
 - [x] More rigorous statistical testing of results
 - [x] Use a random number generator better than rand()

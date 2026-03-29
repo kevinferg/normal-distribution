@@ -1,5 +1,4 @@
-#pragma once
-
+#include "utils/uniform.h"
 #include <math.h>
 #define REJECT_BOUND 3.33333f
 

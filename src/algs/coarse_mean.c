@@ -1,9 +1,7 @@
-#pragma once
-
 #include <stdint.h>
-#include "uniform.h"
+#include "utils/uniform.h"
 
-float frandn_coarse_mean(void) {
+float frandn_coarsemean(void) {
     static const int16_t samples[5][8] = {
         {-18666, 1465,  9124, -2456,  7113,   2465,  2440,  -4190},
         { -1690, 1656, -6392,  3616, -7014,   8614,  5799,  -1058},

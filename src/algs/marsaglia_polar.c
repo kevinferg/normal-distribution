@@ -1,7 +1,5 @@
-#pragma once
-
 #include <stdint.h>
-#include "uniform.h"
+#include "utils/uniform.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
