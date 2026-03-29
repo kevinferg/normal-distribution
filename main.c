@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "timing.h"
+#include "normal.h"
+#include "uniform.h"
+#include "stats.h"
+#include "probit.h"
+#include "fasttrig.h"
+
+#define NUM_VALS (URAND_MAX*1000)
+
+void test_alg(void* args) {
+    AlgArgs* A = (AlgArgs*) args;
+    int i;
+    int status = alg_functions[A->id](A->arr, A->N);
+    return;
+}
+
+void print_summary_header(void) {
+    printf("   ALGORITHM     TIME:NS          MEAN      STDDEV    SKEWNESS    KURTOSIS\n");
+}
+
+int get_method_summary(AlgID id, int N) {
+    float t;
+    float mean, stdev, skew, kurt;
+    float* vals = malloc(N * sizeof(float));
+    if (vals == NULL) return -1;
+
+    AlgArgs A = {.id=id, .arr=vals, .N=N};
+    t = time_function(&test_alg, &A);
+    
+    mean = get_mean(A.arr, N);
+    stdev = get_stdev(A.arr, N);
+    skew = get_skewness(A.arr, N);
+    kurt = get_kurtosis(A.arr, N);
+
+    printf("%12s      %6.2f    % 10.6f  % 10.6f  % 10.6f  % 10.6f\n", alg_names_short[id], t/(NUM_VALS)*1e9, mean, stdev, skew, kurt);
+
+    free(vals);
+    return 0;
+}
+
+int main(int argc, char** argv) {
+
+    AlgID i;
+
+    print_summary_header();
+    for (i = 0; i < ALGMAX; i++) {
+        if (i == 0)        printf("   -----------------------------------------------------------------------\n");
+        if (i == ALGMAX-1) printf("   _______________________________________________________________________\n");
+        get_method_summary(i, NUM_VALS);
+    }
+    printf("IDEAL NORMAL          -       0.0         1.0         0.0         3.0     \n");
+    
+    // test_probit();
+    // test_fasttrig();
+
+    return 0;
+}
