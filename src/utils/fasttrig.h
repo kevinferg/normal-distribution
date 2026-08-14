@@ -9,11 +9,7 @@
  * 
  **********************************************/
 
-#define FASTPI 3.14159265358979323846
-
 float fastsin(float x);
 float fastcos(float x);
-
-int test_fasttrig(void);
 
 #endif
